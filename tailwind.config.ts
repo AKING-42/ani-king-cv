@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Playfair Display', 'serif'],
         handwritten: ['Caveat', 'cursive'],
       },
       colors: {
