@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 
 const Index = () => {
   return (
-    <div className="min-h-screen notebook-bg">
+    <div className="min-h-screen">
       {/* Theme Toggle - Fixed position */}
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
