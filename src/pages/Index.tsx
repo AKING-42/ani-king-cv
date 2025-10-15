@@ -29,7 +29,7 @@ const Index = () => {
             style={{ mixBlendMode: 'lighten' }}
           />
         </div>
-        <p className="text-center text-muted-foreground font-handwritten text-xl">
+        <p className="text-center text-muted-foreground text-xl">
           Resume
         </p>
       </header>
@@ -39,7 +39,7 @@ const Index = () => {
         <div className="grid md:grid-cols-[2fr,1fr] gap-8 items-start">
           {/* About Me Card */}
           <Card className="p-6 border-2 shadow-lg hover:shadow-xl transition-all duration-300">
-            <h2 className="text-3xl font-handwritten font-semibold mb-4">
+            <h2 className="text-3xl font-serif font-semibold mb-4">
               About Me
             </h2>
             <p className="text-foreground/90 leading-relaxed">
@@ -57,7 +57,7 @@ const Index = () => {
           {/* Profile Photo Placeholder */}
           <Card className="p-4 border-2 shadow-lg aspect-square flex items-center justify-center">
             <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
-              <span className="text-muted-foreground font-handwritten text-lg text-center">
+              <span className="text-muted-foreground text-lg text-center">
                 Profile Photo
               </span>
             </div>
@@ -67,7 +67,7 @@ const Index = () => {
 
       {/* Experience Timeline */}
       <section className="container mx-auto px-4 py-12">
-        <h2 className="text-5xl font-handwritten font-bold text-center mb-12">
+        <h2 className="text-5xl font-serif font-bold text-center mb-12">
           Experience & Education
         </h2>
         <Timeline />
@@ -80,7 +80,7 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-muted-foreground">
-        <p className="font-handwritten text-sm">
+        <p className="text-sm">
           © {new Date().getFullYear()} Portfolio. All rights reserved.
         </p>
       </footer>

@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'serif'],
         handwritten: ['Caveat', 'cursive'],
       },
       colors: {
