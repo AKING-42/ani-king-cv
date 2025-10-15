@@ -1,6 +1,5 @@
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Timeline } from "@/components/Timeline";
-import { SkillsMindmap } from "@/components/SkillsMindmap";
 import { Card } from "@/components/ui/card";
 import nameLogo from "@/assets/name-logo.png";
 import aboutMeHeading from "@/assets/about-me-heading.png";
@@ -78,6 +77,22 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Key Skills */}
+      <section className="w-full py-8 border-y border-border/50">
+        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 px-4">
+          {["SQE", "Python", "Storytelling", "Critical thinking", "Stakeholder management", "Excel"].map((skill, index, array) => (
+            <div key={skill} className="flex items-center gap-4 md:gap-8">
+              <span className="text-sm md:text-base font-medium uppercase tracking-wider text-foreground/80">
+                {skill}
+              </span>
+              {index < array.length - 1 && (
+                <span className="text-primary/40">•</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Experience Timeline */}
       <section className="container mx-auto px-4 py-12">
         <div className="flex justify-center mb-12">
@@ -95,11 +110,6 @@ const Index = () => {
           />
         </div>
         <Timeline />
-      </section>
-
-      {/* Skills Mindmap */}
-      <section className="container mx-auto px-4 py-12">
-        <SkillsMindmap />
       </section>
 
       {/* Footer */}
