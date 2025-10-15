@@ -8,17 +8,15 @@ export const SkillsMindmap = () => {
       </h2>
 
       <div className="flex justify-center items-center">
-        <div className="relative rounded-lg p-8 bg-card/50 backdrop-blur-sm border-2 border-border shadow-lg">
-          <img
-            src={skillsMindmapImage}
-            alt="Key Skills Mindmap"
-            className="max-w-full h-auto dark:brightness-90 dark:invert"
-            style={{ 
-              maxHeight: '500px',
-              mixBlendMode: 'multiply'
-            }}
-          />
-        </div>
+        <img
+          src={skillsMindmapImage}
+          alt="Key Skills Mindmap"
+          className="max-w-full h-auto dark:brightness-90 dark:invert"
+          style={{ 
+            maxHeight: '500px',
+            mixBlendMode: 'multiply'
+          }}
+        />
       </div>
     </div>
   );
