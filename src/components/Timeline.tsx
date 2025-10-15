@@ -108,11 +108,11 @@ export const Timeline = () => {
   };
 
   return (
-    <div className="relative max-w-4xl mx-auto py-12">
-      {/* Central line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
+    <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
+      {/* Central line - hidden on mobile, shown on larger screens */}
+      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
 
-      <div className="space-y-12">
+      <div className="space-y-8 sm:space-y-12">
         {timelineData.map((item, index) => {
           const isLeft = index % 2 === 0;
           const isExpanded = expandedItems.has(index);
@@ -122,25 +122,39 @@ export const Timeline = () => {
             <div
               key={index}
               className={`relative flex items-start ${
-                isLeft ? "flex-row" : "flex-row-reverse"
-              }`}
+                isLeft ? "md:flex-row" : "md:flex-row-reverse"
+              } flex-col`}
             >
-              {/* Content - organic handwritten style */}
-              <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pr-4 text-right" : "pl-4 text-left"}`}>
+              {/* Content - mobile: full width, desktop: half width */}
+              <div className={`w-full md:w-[calc(50%-2.5rem)] ${isLeft ? "md:pr-4 md:text-right" : "md:pl-4 md:text-left"} pl-8 md:pl-0`}>
                 <div className="space-y-2">
+                  {/* Mobile node indicator */}
+                  <div
+                    className="md:hidden absolute left-0 top-1 w-4 h-4 rounded-full border-2 border-background shadow-sm"
+                    style={{
+                      backgroundColor: `hsl(var(--${nodeColor}))`,
+                      boxShadow: `0 1px 4px hsl(var(--${nodeColor}) / 0.25)`
+                    }}
+                  />
+                  
                   <h3 
-                    className="font-serif text-2xl font-semibold leading-tight tracking-tight"
+                    className="font-serif text-lg sm:text-xl md:text-2xl font-semibold leading-tight tracking-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-base text-muted-foreground font-medium">
+                  <p className="text-sm sm:text-base text-muted-foreground font-medium">
                     {item.organization}
                     {item.location && `, ${item.location}`}
                   </p>
+                  
+                  {/* Date - mobile: below title, desktop: opposite side */}
+                  <p className="md:hidden text-xs sm:text-sm text-muted-foreground font-medium">
+                    {item.dates}
+                  </p>
 
                   {isExpanded && (
-                    <ul className={`mt-4 space-y-2 text-sm ${isLeft ? "text-right" : "text-left"}`}>
+                    <ul className={`mt-4 space-y-2 text-sm ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
                       {item.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex} 
@@ -153,6 +167,7 @@ export const Timeline = () => {
                           }}
                         >
                           <span 
+                            className="hidden md:inline"
                             style={{
                               position: 'absolute',
                               [isLeft ? 'right' : 'left']: '0',
@@ -161,6 +176,16 @@ export const Timeline = () => {
                               height: '4px',
                               borderRadius: '50%',
                               backgroundColor: `hsl(var(--${nodeColor}))`
+                            }}
+                          />
+                          <span 
+                            className="md:hidden inline-block mr-2"
+                            style={{
+                              width: '4px',
+                              height: '4px',
+                              borderRadius: '50%',
+                              backgroundColor: `hsl(var(--${nodeColor}))`,
+                              transform: 'translateY(-2px)'
                             }}
                           />
                           {bullet}
@@ -173,17 +198,17 @@ export const Timeline = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => toggleItem(index)}
-                    className="mt-3 gap-2 text-xs hover:bg-transparent font-medium"
+                    className="mt-3 gap-2 text-xs sm:text-sm hover:bg-transparent font-medium min-h-[44px] md:min-h-0"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {isExpanded ? (
                       <>
-                        <ChevronUp className="h-3 w-3" />
+                        <ChevronUp className="h-4 w-4" />
                         Show Less
                       </>
                     ) : (
                       <>
-                        <ChevronDown className="h-3 w-3" />
+                        <ChevronDown className="h-4 w-4" />
                         Show Details
                       </>
                     )}
@@ -191,16 +216,16 @@ export const Timeline = () => {
                 </div>
               </div>
 
-              {/* Date on opposite side */}
-              <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pl-20 text-left" : "pr-20 text-right"}`}>
+              {/* Date on opposite side - desktop only */}
+              <div className={`hidden md:block w-[calc(50%-2.5rem)] ${isLeft ? "pl-20 text-left" : "pr-20 text-right"}`}>
                 <p className="text-sm text-muted-foreground font-medium pt-1">
                   {item.dates}
                 </p>
               </div>
 
-              {/* Node - clean modern style */}
+              {/* Node - clean modern style - desktop only */}
               <div
-                className="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-[3px] border-background shadow-md z-10 transition-all hover:scale-110"
+                className="hidden md:block absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-[3px] border-background shadow-md z-10 transition-all hover:scale-110"
                 style={{
                   backgroundColor: `hsl(var(--${nodeColor}))`,
                   boxShadow: `0 2px 6px hsl(var(--${nodeColor}) / 0.25)`
