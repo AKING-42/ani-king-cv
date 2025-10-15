@@ -3,6 +3,7 @@ import { Timeline } from "@/components/Timeline";
 import { SkillsMindmap } from "@/components/SkillsMindmap";
 import { Card } from "@/components/ui/card";
 import nameLogo from "@/assets/name-logo.png";
+import aboutMeHeading from "@/assets/about-me-heading.png";
 
 
 const Index = () => {
@@ -39,9 +40,20 @@ const Index = () => {
         <div className="grid md:grid-cols-[2fr,1fr] gap-8 items-start">
           {/* About Me Card */}
           <Card className="p-6 border-2 shadow-lg hover:shadow-xl transition-all duration-300">
-            <h2 className="text-3xl font-serif font-semibold mb-4">
-              About Me
-            </h2>
+            <div className="mb-4">
+              <img
+                src={aboutMeHeading}
+                alt="About Me"
+                className="h-12 w-auto dark:hidden"
+                style={{ mixBlendMode: 'darken' }}
+              />
+              <img
+                src={aboutMeHeading}
+                alt="About Me"
+                className="h-12 w-auto hidden dark:block invert"
+                style={{ mixBlendMode: 'lighten' }}
+              />
+            </div>
             <p className="text-foreground/90 leading-relaxed">
               With experience across top-of-funnel marketing and legal market research, 
               underpinned by an exceptional academic foundation, I am adept at thinking 
