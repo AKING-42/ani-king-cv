@@ -126,7 +126,7 @@ export const Timeline = () => {
               }`}
             >
               {/* Content - organic handwritten style */}
-              <div className={`w-[calc(50%-4rem)] ${isLeft ? "pr-8 text-right" : "pl-8 text-left"}`}>
+              <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pr-4 text-right" : "pl-4 text-left"}`}>
                 <div className="space-y-2">
                   <h3 
                     className="font-handwritten text-3xl font-bold leading-tight"
@@ -192,7 +192,7 @@ export const Timeline = () => {
               </div>
 
               {/* Date on opposite side */}
-              <div className={`w-[calc(50%-4rem)] ${isLeft ? "pl-24 text-left" : "pr-24 text-right"}`}>
+              <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pl-20 text-left" : "pr-20 text-right"}`}>
                 <p className="font-handwritten text-base text-muted-foreground/70 italic pt-1">
                   {item.dates}
                 </p>
