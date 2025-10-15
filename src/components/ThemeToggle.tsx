@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import sunIcon from "@/assets/sun-icon.png";
 import moonIcon from "@/assets/moon-icon.png";
+import { Button } from "@/components/ui/button";
 
 export const ThemeToggle = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -24,26 +25,27 @@ export const ThemeToggle = () => {
   const icon = theme === "light" ? moonIcon : sunIcon;
 
   return (
-    <button
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-      className="rounded-full w-12 h-12 grid place-items-center bg-transparent border-0 outline-none"
-      style={{ background: "transparent" }}
-    >
-      {/* Light mode render (darken on white bg) */}
-      <img
-        src={icon}
-        alt={theme === "light" ? "Dark mode" : "Light mode"}
-        className="w-7 h-7 dark:hidden"
-        style={{ mixBlendMode: 'darken' }}
-      />
-      {/* Dark mode render (invert + lighten) */}
-      <img
-        src={icon}
-        alt={theme === "light" ? "Dark mode" : "Light mode"}
-        className="w-7 h-7 hidden dark:block invert"
-        style={{ mixBlendMode: 'lighten' }}
-      />
-    </button>
+      <Button
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+      >
+        {/* Light mode render (darken on white bg) */}
+        <img
+          src={icon}
+          alt={theme === "light" ? "Dark mode" : "Light mode"}
+          className="w-7 h-7 dark:hidden"
+          style={{ mixBlendMode: 'darken' }}
+        />
+        {/* Dark mode render (invert + lighten) */}
+        <img
+          src={icon}
+          alt={theme === "light" ? "Dark mode" : "Light mode"}
+          className="w-7 h-7 hidden dark:block invert"
+          style={{ mixBlendMode: 'lighten' }}
+        />
+      </Button>
   );
 };
