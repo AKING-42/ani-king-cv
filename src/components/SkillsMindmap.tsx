@@ -20,10 +20,10 @@ export const SkillsMindmap = () => {
         <img
           src={skillsMindmapImage}
           alt="Key Skills Mindmap"
-          className="max-w-full h-auto hidden dark:block"
+          className="max-w-full h-auto hidden dark:block invert"
           style={{ 
             maxHeight: '500px',
-            mixBlendMode: 'screen'
+            mixBlendMode: 'lighten'
           }}
         />
       </div>
