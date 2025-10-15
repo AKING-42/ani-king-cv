@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import sunIcon from "@/assets/sun-icon.png";
-import moonIcon from "@/assets/moon-icon.png";
+import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const ThemeToggle = () => {
@@ -22,7 +21,7 @@ export const ThemeToggle = () => {
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
 
-  const icon = theme === "light" ? moonIcon : sunIcon;
+  
 
   return (
       <Button
@@ -30,22 +29,11 @@ export const ThemeToggle = () => {
         aria-label="Toggle theme"
         variant="ghost"
         size="icon"
-        className="rounded-full"
+        className="rounded-full relative"
       >
-        {/* Light mode render (darken on white bg) */}
-        <img
-          src={icon}
-          alt={theme === "light" ? "Dark mode" : "Light mode"}
-          className="w-7 h-7 dark:hidden"
-          style={{ mixBlendMode: 'darken' }}
-        />
-        {/* Dark mode render (invert + lighten) */}
-        <img
-          src={icon}
-          alt={theme === "light" ? "Dark mode" : "Light mode"}
-          className="w-7 h-7 hidden dark:block invert"
-          style={{ mixBlendMode: 'lighten' }}
-        />
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <span className="sr-only">Toggle theme</span>
       </Button>
   );
 };
