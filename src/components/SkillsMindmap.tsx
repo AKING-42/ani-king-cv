@@ -13,7 +13,8 @@ export const SkillsMindmap = () => {
           alt="Key Skills Mindmap"
           className="max-w-full h-auto dark:invert"
           style={{ 
-            maxHeight: '500px'
+            maxHeight: '500px',
+            mixBlendMode: 'darken'
           }}
         />
       </div>
