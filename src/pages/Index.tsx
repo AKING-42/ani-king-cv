@@ -2,6 +2,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Timeline } from "@/components/Timeline";
 import { SkillsMindmap } from "@/components/SkillsMindmap";
 import { Card } from "@/components/ui/card";
+import nameLogo from "@/assets/name-logo.png";
 
 
 const Index = () => {
@@ -14,11 +15,22 @@ const Index = () => {
 
       {/* Header */}
       <header className="container mx-auto px-4 pt-16 pb-8">
-        <h1 className="text-6xl md:text-7xl font-handwritten font-bold text-center mb-2 handwritten-underline">
-          Your Name
-        </h1>
+        <div className="flex justify-center mb-1 handwritten-underline">
+          <img
+            src={nameLogo}
+            alt="Anieshka King"
+            className="h-24 md:h-28 w-auto dark:hidden"
+            style={{ mixBlendMode: 'darken' }}
+          />
+          <img
+            src={nameLogo}
+            alt="Anieshka King"
+            className="h-24 md:h-28 w-auto hidden dark:block invert"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </div>
         <p className="text-center text-muted-foreground font-handwritten text-xl">
-          Portfolio & Experience
+          Resume
         </p>
       </header>
 
