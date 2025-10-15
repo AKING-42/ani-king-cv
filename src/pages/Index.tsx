@@ -79,6 +79,9 @@ const Index = () => {
 
       {/* Key Skills */}
       <section className="w-full py-6 sm:py-8 border-y border-border/50">
+        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6">
+          Key Skills:
+        </h2>
         <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-8 px-4 sm:px-6">
           {["SQE", "Python", "Storytelling", "Critical thinking", "Stakeholder management", "Excel"].map((skill, index, array) => (
             <div key={skill} className="flex items-center gap-3 sm:gap-4 md:gap-8">
@@ -110,6 +113,26 @@ const Index = () => {
           />
         </div>
         <Timeline />
+      </section>
+
+
+      {/* Interests */}
+      <section className="w-full py-6 sm:py-8 border-t border-border/50">
+        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6">
+          Interests:
+        </h2>
+        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-8 px-4 sm:px-6">
+          {["Conservation volunteering", "Freelance art and singing", "French learning (started podcast)", "Tennis", "Hiking"].map((interest, index, array) => (
+            <div key={interest} className="flex items-center gap-3 sm:gap-4 md:gap-8">
+              <span className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider text-foreground/80">
+                {interest}
+              </span>
+              {index < array.length - 1 && (
+                <span className="text-primary/40 hidden sm:inline">•</span>
+              )}
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Footer */}
