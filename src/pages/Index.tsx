@@ -67,8 +67,8 @@ const Index = () => {
           </Card>
 
           {/* Profile Photo Placeholder */}
-          <Card className="p-4 border-2 shadow-lg aspect-square flex items-center justify-center">
-            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
+          <Card className="p-4 border-2 shadow-lg h-full flex items-center justify-center">
+            <div className="w-full aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
               <span className="text-muted-foreground text-lg text-center">
                 Profile Photo
               </span>
