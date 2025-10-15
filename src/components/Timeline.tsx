@@ -129,7 +129,7 @@ export const Timeline = () => {
               <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pr-4 text-right" : "pl-4 text-left"}`}>
                 <div className="space-y-2">
                   <h3 
-                    className="font-handwritten text-3xl font-bold leading-tight"
+                    className="font-serif text-3xl font-bold leading-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
