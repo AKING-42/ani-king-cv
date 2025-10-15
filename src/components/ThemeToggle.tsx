@@ -22,22 +22,29 @@ export const ThemeToggle = () => {
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
 
+  const icon = theme === "light" ? moonIcon : sunIcon;
+
   return (
     <Button
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="rounded-full hover:bg-muted/30 transition-all duration-300 relative w-12 h-12"
+      className="rounded-full hover:bg-transparent transition-all duration-300 relative w-12 h-12"
       aria-label="Toggle theme"
     >
+      {/* Light mode render (darken on white bg) */}
       <img
-        src={theme === "light" ? moonIcon : sunIcon}
+        src={icon}
         alt={theme === "light" ? "Dark mode" : "Light mode"}
-        className="w-7 h-7 transition-transform duration-300"
-        style={{
-          mixBlendMode: theme === "dark" ? "screen" : "multiply",
-          filter: theme === "dark" ? "invert(1)" : "none"
-        }}
+        className="w-7 h-7 dark:hidden"
+        style={{ mixBlendMode: 'darken' }}
+      />
+      {/* Dark mode render (invert + lighten) */}
+      <img
+        src={icon}
+        alt={theme === "light" ? "Dark mode" : "Light mode"}
+        className="w-7 h-7 hidden dark:block invert"
+        style={{ mixBlendMode: 'lighten' }}
       />
     </Button>
   );
