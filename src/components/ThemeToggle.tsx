@@ -33,8 +33,11 @@ export const ThemeToggle = () => {
       <img
         src={theme === "light" ? moonIcon : sunIcon}
         alt={theme === "light" ? "Dark mode" : "Light mode"}
-        className="w-7 h-7 dark:invert transition-transform duration-300"
-        style={{ mixBlendMode: 'darken' }}
+        className="w-7 h-7 transition-transform duration-300"
+        style={{
+          mixBlendMode: theme === "dark" ? "screen" : "multiply",
+          filter: theme === "dark" ? "invert(1)" : "none"
+        }}
       />
     </Button>
   );
