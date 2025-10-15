@@ -129,12 +129,12 @@ export const Timeline = () => {
               <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pr-4 text-right" : "pl-4 text-left"}`}>
                 <div className="space-y-2">
                   <h3 
-                    className="font-serif text-3xl font-bold leading-tight"
+                    className="font-serif text-2xl font-semibold leading-tight tracking-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
                   </h3>
-                  <p className="font-handwritten text-lg text-muted-foreground">
+                  <p className="text-base text-muted-foreground font-medium">
                     {item.organization}
                     {item.location && `, ${item.location}`}
                   </p>
@@ -173,7 +173,7 @@ export const Timeline = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => toggleItem(index)}
-                    className="mt-3 gap-2 text-xs font-handwritten hover:bg-transparent"
+                    className="mt-3 gap-2 text-xs hover:bg-transparent font-medium"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {isExpanded ? (
@@ -193,18 +193,17 @@ export const Timeline = () => {
 
               {/* Date on opposite side */}
               <div className={`w-[calc(50%-2.5rem)] ${isLeft ? "pl-20 text-left" : "pr-20 text-right"}`}>
-                <p className="font-handwritten text-base text-muted-foreground/70 italic pt-1">
+                <p className="text-sm text-muted-foreground font-medium pt-1">
                   {item.dates}
                 </p>
               </div>
 
-              {/* Node with hand-drawn feel */}
+              {/* Node - clean modern style */}
               <div
-                className="absolute left-1/2 -translate-x-1/2 w-7 h-7 rounded-full border-4 border-background shadow-lg z-10 transition-transform hover:scale-110 animate-fade-in"
+                className="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-[3px] border-background shadow-md z-10 transition-all hover:scale-110"
                 style={{
                   backgroundColor: `hsl(var(--${nodeColor}))`,
-                  transform: 'translate(-50%, 0) rotate(3deg)',
-                  boxShadow: `0 2px 8px hsl(var(--${nodeColor}) / 0.3)`
+                  boxShadow: `0 2px 6px hsl(var(--${nodeColor}) / 0.25)`
                 }}
               />
             </div>
