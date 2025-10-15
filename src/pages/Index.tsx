@@ -4,6 +4,7 @@ import { SkillsMindmap } from "@/components/SkillsMindmap";
 import { Card } from "@/components/ui/card";
 import nameLogo from "@/assets/name-logo.png";
 import aboutMeHeading from "@/assets/about-me-heading.png";
+import experienceEducationHeading from "@/assets/experience-education-heading.png";
 
 
 const Index = () => {
@@ -79,9 +80,20 @@ const Index = () => {
 
       {/* Experience Timeline */}
       <section className="container mx-auto px-4 py-12">
-        <h2 className="text-5xl font-serif font-bold text-center mb-12">
-          Experience & Education
-        </h2>
+        <div className="flex justify-center mb-12">
+          <img
+            src={experienceEducationHeading}
+            alt="Experience & Education"
+            className="h-16 md:h-20 w-auto dark:hidden"
+            style={{ mixBlendMode: 'darken' }}
+          />
+          <img
+            src={experienceEducationHeading}
+            alt="Experience & Education"
+            className="h-16 md:h-20 w-auto hidden dark:block invert"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </div>
         <Timeline />
       </section>
 
