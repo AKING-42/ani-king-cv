@@ -110,7 +110,7 @@ export const Timeline = () => {
   return (
     <div className="relative max-w-4xl mx-auto py-12">
       {/* Central line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border/30 -translate-x-1/2" />
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
 
       <div className="space-y-12">
         {timelineData.map((item, index) => {
@@ -126,10 +126,10 @@ export const Timeline = () => {
               }`}
             >
               {/* Content - organic handwritten style */}
-              <div className={`w-[calc(50%-3rem)] ${isLeft ? "pr-12 text-right" : "pl-12 text-left"}`}>
+              <div className={`w-[calc(50%-4rem)] ${isLeft ? "pr-16 text-right" : "pl-16 text-left"}`}>
                 <div className="space-y-2">
                   <h3 
-                    className="font-handwritten text-2xl font-bold"
+                    className="font-handwritten text-3xl font-bold leading-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
@@ -192,7 +192,7 @@ export const Timeline = () => {
               </div>
 
               {/* Date on opposite side */}
-              <div className={`w-[calc(50%-3rem)] ${isLeft ? "pl-12 text-left" : "pr-12 text-right"}`}>
+              <div className={`w-[calc(50%-4rem)] ${isLeft ? "pl-16 text-left" : "pr-16 text-right"}`}>
                 <p className="font-handwritten text-base text-muted-foreground/70 italic pt-1">
                   {item.dates}
                 </p>
@@ -200,7 +200,7 @@ export const Timeline = () => {
 
               {/* Node with hand-drawn feel */}
               <div
-                className="absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full border-4 border-background shadow-lg z-10 transition-transform hover:scale-110 animate-fade-in"
+                className="absolute left-1/2 -translate-x-1/2 w-7 h-7 rounded-full border-4 border-background shadow-lg z-10 transition-transform hover:scale-110 animate-fade-in"
                 style={{
                   backgroundColor: `hsl(var(--${nodeColor}))`,
                   transform: 'translate(-50%, 0) rotate(3deg)',
