@@ -79,13 +79,13 @@ const Index = () => {
 
       {/* Key Skills */}
       <section className="w-full py-6 sm:py-8 border-y border-border/50">
-        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6">
+        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6 handwritten-underline inline-block w-full">
           Key Skills:
         </h2>
-        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-8 px-4 sm:px-6">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-6 px-4 sm:px-6">
           {["SQE", "Python", "Storytelling", "Critical thinking", "Stakeholder management", "Excel"].map((skill, index, array) => (
-            <div key={skill} className="flex items-center gap-3 sm:gap-4 md:gap-8">
-              <span className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider text-foreground/80">
+            <div key={skill} className="flex items-center gap-2 sm:gap-3 md:gap-6">
+              <span className="text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap">
                 {skill}
               </span>
               {index < array.length - 1 && (
@@ -118,13 +118,13 @@ const Index = () => {
 
       {/* Interests */}
       <section className="w-full py-6 sm:py-8 border-t border-border/50">
-        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6">
+        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6 handwritten-underline inline-block w-full">
           Interests:
         </h2>
-        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-8 px-4 sm:px-6">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-6 px-4 sm:px-6">
           {["Conservation volunteering", "Freelance art and singing", "French learning (started podcast)", "Tennis", "Hiking"].map((interest, index, array) => (
-            <div key={interest} className="flex items-center gap-3 sm:gap-4 md:gap-8">
-              <span className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider text-foreground/80">
+            <div key={interest} className="flex items-center gap-2 sm:gap-3 md:gap-6">
+              <span className="text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap">
                 {interest}
               </span>
               {index < array.length - 1 && (
