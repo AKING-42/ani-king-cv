@@ -1,6 +1,7 @@
-import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import sunIcon from "@/assets/sun-icon.png";
+import moonIcon from "@/assets/moon-icon.png";
 
 export const ThemeToggle = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -26,13 +27,39 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="rounded-full hover:bg-muted transition-all duration-300"
+      className="rounded-full hover:bg-muted/30 transition-all duration-300 relative w-12 h-12"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
-        <Moon className="h-5 w-5 transition-transform duration-300 rotate-0" />
+        <>
+          <img
+            src={moonIcon}
+            alt="Dark mode"
+            className="w-7 h-7 dark:hidden transition-transform duration-300"
+            style={{ mixBlendMode: 'darken' }}
+          />
+          <img
+            src={moonIcon}
+            alt="Dark mode"
+            className="w-7 h-7 hidden dark:block invert transition-transform duration-300"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </>
       ) : (
-        <Sun className="h-5 w-5 transition-transform duration-300 rotate-180" />
+        <>
+          <img
+            src={sunIcon}
+            alt="Light mode"
+            className="w-7 h-7 dark:hidden transition-transform duration-300"
+            style={{ mixBlendMode: 'darken' }}
+          />
+          <img
+            src={sunIcon}
+            alt="Light mode"
+            className="w-7 h-7 hidden dark:block invert transition-transform duration-300"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </>
       )}
     </Button>
   );
