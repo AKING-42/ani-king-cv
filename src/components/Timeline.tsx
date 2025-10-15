@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 
 interface TimelineItem {
   type: "education" | "experience";
@@ -111,9 +110,9 @@ export const Timeline = () => {
   return (
     <div className="relative max-w-4xl mx-auto py-12">
       {/* Central line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2" />
+      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border/30 -translate-x-1/2" />
 
-      <div className="space-y-8">
+      <div className="space-y-12">
         {timelineData.map((item, index) => {
           const isLeft = index % 2 === 0;
           const isExpanded = expandedItems.has(index);
@@ -122,62 +121,90 @@ export const Timeline = () => {
           return (
             <div
               key={index}
-              className={`relative flex items-center ${
+              className={`relative flex items-start ${
                 isLeft ? "flex-row" : "flex-row-reverse"
               }`}
             >
-              {/* Content Card */}
-              <div className={`w-[calc(50%-2rem)] ${isLeft ? "pr-8" : "pl-8"}`}>
-                <Card className="p-4 hover:shadow-lg transition-all duration-300 border-2">
-                  <div className="space-y-2">
-                    <h3 className="font-handwritten text-xl font-semibold">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm font-medium text-muted-foreground">
-                      {item.organization}
-                      {item.location && `, ${item.location}`}
-                    </p>
-                    <p className="text-xs text-muted-foreground italic">
-                      {item.dates}
-                    </p>
+              {/* Content - organic handwritten style */}
+              <div className={`w-[calc(50%-3rem)] ${isLeft ? "pr-12 text-right" : "pl-12 text-left"}`}>
+                <div className="space-y-2">
+                  <h3 
+                    className="font-handwritten text-2xl font-bold"
+                    style={{ color: `hsl(var(--${nodeColor}))` }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="font-handwritten text-lg text-muted-foreground">
+                    {item.organization}
+                    {item.location && `, ${item.location}`}
+                  </p>
 
-                    {isExpanded && (
-                      <ul className="mt-3 space-y-2 text-sm list-disc list-inside">
-                        {item.bullets.map((bullet, bulletIndex) => (
-                          <li key={bulletIndex} className="text-foreground/90">
-                            {bullet}
-                          </li>
-                        ))}
-                      </ul>
+                  {isExpanded && (
+                    <ul className={`mt-4 space-y-2 text-sm ${isLeft ? "text-right" : "text-left"}`}>
+                      {item.bullets.map((bullet, bulletIndex) => (
+                        <li 
+                          key={bulletIndex} 
+                          className="text-foreground/80 leading-relaxed"
+                          style={{
+                            listStyleType: 'none',
+                            position: 'relative',
+                            paddingLeft: isLeft ? '0' : '1.5rem',
+                            paddingRight: isLeft ? '1.5rem' : '0'
+                          }}
+                        >
+                          <span 
+                            style={{
+                              position: 'absolute',
+                              [isLeft ? 'right' : 'left']: '0',
+                              top: '0.5rem',
+                              width: '4px',
+                              height: '4px',
+                              borderRadius: '50%',
+                              backgroundColor: `hsl(var(--${nodeColor}))`
+                            }}
+                          />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => toggleItem(index)}
+                    className="mt-3 gap-2 text-xs font-handwritten hover:bg-transparent"
+                    style={{ color: `hsl(var(--${nodeColor}))` }}
+                  >
+                    {isExpanded ? (
+                      <>
+                        <ChevronUp className="h-3 w-3" />
+                        Show Less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-3 w-3" />
+                        Show Details
+                      </>
                     )}
-
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => toggleItem(index)}
-                      className="mt-2 w-full justify-center gap-2 text-xs"
-                    >
-                      {isExpanded ? (
-                        <>
-                          <ChevronUp className="h-3 w-3" />
-                          Show Less
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown className="h-3 w-3" />
-                          Show Details
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </Card>
+                  </Button>
+                </div>
               </div>
 
-              {/* Node */}
+              {/* Date on opposite side */}
+              <div className={`w-[calc(50%-3rem)] ${isLeft ? "pl-12 text-left" : "pr-12 text-right"}`}>
+                <p className="font-handwritten text-base text-muted-foreground/70 italic pt-1">
+                  {item.dates}
+                </p>
+              </div>
+
+              {/* Node with hand-drawn feel */}
               <div
-                className={`absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border-4 border-background shadow-lg z-10 transition-transform hover:scale-110`}
+                className="absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full border-4 border-background shadow-lg z-10 transition-transform hover:scale-110 animate-fade-in"
                 style={{
-                  backgroundColor: `hsl(var(--${nodeColor}))`
+                  backgroundColor: `hsl(var(--${nodeColor}))`,
+                  transform: 'translate(-50%, 0) rotate(3deg)',
+                  boxShadow: `0 2px 8px hsl(var(--${nodeColor}) / 0.3)`
                 }}
               />
             </div>

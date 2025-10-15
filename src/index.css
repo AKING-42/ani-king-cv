@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 20%;
 
-    --primary: 215 70% 45%;
+    --primary: 25 85% 45%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 45 15% 88%;
@@ -26,7 +26,7 @@ All colors MUST be HSL.
     --muted: 45 15% 90%;
     --muted-foreground: 220 10% 50%;
 
-    --accent: 280 50% 55%;
+    --accent: 210 100% 25%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 70% 50%;
@@ -34,12 +34,12 @@ All colors MUST be HSL.
 
     --border: 220 15% 85%;
     --input: 220 15% 85%;
-    --ring: 215 70% 45%;
+    --ring: 25 85% 45%;
 
     --radius: 0.75rem;
 
-    --work-node: 215 70% 45%;
-    --education-node: 280 50% 55%;
+    --work-node: 25 85% 45%;
+    --education-node: 210 100% 25%;
     
     --grid-line: 220 15% 88%;
     --notebook-margin: 0 70% 50%;
@@ -64,7 +64,7 @@ All colors MUST be HSL.
     --popover: 220 18% 15%;
     --popover-foreground: 45 20% 92%;
 
-    --primary: 215 70% 60%;
+    --primary: 25 85% 55%;
     --primary-foreground: 220 20% 12%;
 
     --secondary: 220 15% 20%;
@@ -73,18 +73,18 @@ All colors MUST be HSL.
     --muted: 220 15% 18%;
     --muted-foreground: 220 10% 65%;
 
-    --accent: 280 50% 65%;
-    --accent-foreground: 220 20% 12%;
+    --accent: 210 100% 35%;
+    --accent-foreground: 45 20% 92%;
 
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 220 15% 25%;
     --input: 220 15% 25%;
-    --ring: 215 70% 60%;
+    --ring: 25 85% 55%;
 
-    --work-node: 215 70% 60%;
-    --education-node: 280 50% 65%;
+    --work-node: 25 85% 55%;
+    --education-node: 210 100% 35%;
     
     --grid-line: 220 15% 18%;
     --notebook-margin: 0 70% 55%;
