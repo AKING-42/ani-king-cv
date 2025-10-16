@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import magicHat from "@/assets/magic-hat.png";
 
 const cvExperiences = [
@@ -27,11 +27,33 @@ const cvExperiences = [
 
 export const MagicHat = () => {
   const [randomExperience, setRandomExperience] = useState<string>("");
+  const [isShrinking, setIsShrinking] = useState(false);
+  
+  const bananagramsExperience = "Consistently winning at Bananagrams (wait, that wasn't meant to be in here)";
 
   const pullRandomExperience = () => {
+    setIsShrinking(false);
     const randomIndex = Math.floor(Math.random() * cvExperiences.length);
     setRandomExperience(cvExperiences[randomIndex]);
   };
+
+  useEffect(() => {
+    if (randomExperience === bananagramsExperience) {
+      const shrinkTimer = setTimeout(() => {
+        setIsShrinking(true);
+      }, 5000);
+
+      const clearTimer = setTimeout(() => {
+        setRandomExperience("");
+        setIsShrinking(false);
+      }, 5500);
+
+      return () => {
+        clearTimeout(shrinkTimer);
+        clearTimeout(clearTimer);
+      };
+    }
+  }, [randomExperience]);
 
   return (
     <section className="w-full py-8 sm:py-12 border-y border-border/50">
@@ -39,7 +61,7 @@ export const MagicHat = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Random experience display */}
           {randomExperience && (
-            <div className="w-full animate-fade-in">
+            <div className={`w-full ${isShrinking ? 'animate-scale-out' : 'animate-fade-in'}`}>
               <p className="text-foreground/80 leading-relaxed text-base sm:text-lg text-center p-4 bg-primary/5 rounded-lg border border-primary/20">
                 {randomExperience}
               </p>
