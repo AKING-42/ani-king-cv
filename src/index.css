@@ -112,16 +112,8 @@ All colors MUST be HSL.
       linear-gradient(to right, hsl(var(--grid-line)) 1px, transparent 1px),
       linear-gradient(to bottom, hsl(var(--grid-line)) 1px, transparent 1px);
     background-size: 24px 24px;
-    animation: background-scroll 20s linear infinite;
-  }
-
-  @keyframes background-scroll {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 0 24px;
-    }
+    background-position: 0 var(--bg-offset-y, 0px), 0 var(--bg-offset-y, 0px);
+    will-change: background-position;
   }
 
   h1, h2, h3 {
