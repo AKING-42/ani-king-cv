@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Timeline } from "@/components/Timeline";
+import { MagicHat } from "@/components/MagicHat";
 import { Card } from "@/components/ui/card";
 import nameLogo from "@/assets/name-logo.png";
 import aboutMeHeading from "@/assets/about-me-heading.png";
@@ -111,6 +112,9 @@ const Index = () => {
           ))}
         </div>
       </section>
+
+      {/* Magic Hat */}
+      <MagicHat />
 
       {/* Experience Timeline */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
