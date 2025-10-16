@@ -85,7 +85,7 @@ const Index = () => {
         <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-6 px-4 sm:px-6">
           {["SQE", "Python", "Storytelling", "Critical thinking", "Stakeholder management", "Excel"].map((skill, index, array) => (
             <div key={skill} className="flex items-center gap-2 sm:gap-3 md:gap-6">
-              <span className="text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap">
+              <span className="text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap transition-transform duration-200 hover:scale-110 cursor-default">
                 {skill}
               </span>
               {index < array.length - 1 && (
@@ -124,7 +124,7 @@ const Index = () => {
         <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-6 px-4 sm:px-6">
           {["Conservation volunteering", "Freelance art and singing", "French learning (started podcast)", "Tennis", "Hiking"].map((interest, index, array) => (
             <div key={interest} className="flex items-center gap-2 sm:gap-3 md:gap-6">
-              <span className="text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap">
+              <span className="text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap transition-transform duration-200 hover:scale-110 cursor-default">
                 {interest}
               </span>
               {index < array.length - 1 && (

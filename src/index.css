@@ -26,7 +26,7 @@ All colors MUST be HSL.
     --muted: 45 15% 90%;
     --muted-foreground: 220 15% 35%;
 
-    --accent: 210 100% 25%;
+    --accent: 210 100% 20%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 70% 50%;
@@ -73,7 +73,7 @@ All colors MUST be HSL.
     --muted: 220 15% 18%;
     --muted-foreground: 220 10% 65%;
 
-    --accent: 210 100% 35%;
+    --accent: 210 100% 28%;
     --accent-foreground: 45 20% 92%;
 
     --destructive: 0 70% 55%;
@@ -84,7 +84,7 @@ All colors MUST be HSL.
     --ring: 25 85% 55%;
 
     --work-node: 25 85% 55%;
-    --education-node: 210 100% 35%;
+    --education-node: 210 100% 28%;
     
     --grid-line: 220 15% 18%;
     --notebook-margin: 0 70% 55%;
@@ -140,7 +140,7 @@ All colors MUST be HSL.
     right: 0;
     bottom: -4px;
     height: 2px;
-    background: currentColor;
+    background: hsl(var(--accent));
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
