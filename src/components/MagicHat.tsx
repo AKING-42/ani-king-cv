@@ -18,7 +18,11 @@ const cvExperiences = [
   "Assisted business founder with top of funnel initiatives",
   "Liaised with clients to refresh visual and written assets to strengthen brand identity and improve digital presence",
   "Designed webpages for clients in a broad range of industries to increase brand awareness",
-  "Crafted captions for scheduled Instagram, Facebook and LinkedIn posts"
+  "Crafted captions for scheduled Instagram, Facebook and LinkedIn posts",
+  "Commissioned to create posters for a local café",
+  "Doing freelance singing, mainly for film scores",
+  "Volunteering at Hampstead Heath to help the public engage with nature and raise money for Heath Hands",
+  "Consistently winning at Bananagrams (wait, that wasn't meant to be in here)"
 ];
 
 export const MagicHat = () => {
