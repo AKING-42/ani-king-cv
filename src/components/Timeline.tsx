@@ -138,23 +138,23 @@ export const Timeline = () => {
                   />
                   
                   <h3 
-                    className="font-serif text-lg sm:text-xl md:text-2xl font-semibold leading-tight tracking-tight"
+                    className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold leading-tight tracking-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground font-medium">
+                  <p className="text-base sm:text-lg text-muted-foreground font-medium">
                     {item.organization}
                     {item.location && `, ${item.location}`}
                   </p>
                   
                   {/* Date - mobile: below title, desktop: opposite side */}
-                  <p className="md:hidden text-sm sm:text-base text-muted-foreground font-medium">
+                  <p className="md:hidden text-base sm:text-lg text-muted-foreground font-medium">
                     {item.dates}
                   </p>
 
                   {isExpanded && (
-                    <ul className={`mt-4 space-y-2 text-base ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
+                    <ul className={`mt-4 space-y-3 text-base sm:text-lg ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
                       {item.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex} 
@@ -162,8 +162,8 @@ export const Timeline = () => {
                           style={{
                             listStyleType: 'none',
                             position: 'relative',
-                            paddingLeft: isLeft ? '0' : '1.5rem',
-                            paddingRight: isLeft ? '1.5rem' : '0'
+                            paddingLeft: isLeft ? '0' : '2.5rem',
+                            paddingRight: isLeft ? '2.5rem' : '0'
                           }}
                         >
                           <span 
@@ -218,7 +218,7 @@ export const Timeline = () => {
 
               {/* Date on opposite side - desktop only */}
               <div className={`hidden md:block w-[calc(50%-2.5rem)] ${isLeft ? "pl-20 text-left" : "pr-20 text-right"}`}>
-                <p className="text-base text-muted-foreground font-medium pt-1">
+                <p className="text-base sm:text-lg text-muted-foreground font-medium pt-1">
                   {item.dates}
                 </p>
               </div>
