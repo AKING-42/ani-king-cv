@@ -158,13 +158,13 @@ export const Timeline = () => {
                       {item.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex} 
-                          className="text-foreground/80 leading-relaxed flex items-start gap-3"
+                          className="text-foreground/80 leading-relaxed flex items-center gap-3"
                           style={{
                             flexDirection: isLeft ? 'row-reverse' : 'row'
                           }}
                         >
                           <span 
-                            className="hidden md:inline-block mt-2"
+                            className="hidden md:inline-block"
                             style={{
                               width: '4px',
                               height: '4px',
@@ -174,7 +174,7 @@ export const Timeline = () => {
                             }}
                           />
                           <span 
-                            className="md:hidden inline-block mt-2"
+                            className="md:hidden inline-block"
                             style={{
                               width: '4px',
                               height: '4px',
