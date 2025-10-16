@@ -149,12 +149,12 @@ export const Timeline = () => {
                   </p>
                   
                   {/* Date - mobile: below title, desktop: opposite side */}
-                  <p className="md:hidden text-xs sm:text-sm text-muted-foreground font-medium">
+                  <p className="md:hidden text-sm sm:text-base text-muted-foreground font-medium">
                     {item.dates}
                   </p>
 
                   {isExpanded && (
-                    <ul className={`mt-4 space-y-2 text-sm ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
+                    <ul className={`mt-4 space-y-2 text-base ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
                       {item.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex} 
@@ -218,7 +218,7 @@ export const Timeline = () => {
 
               {/* Date on opposite side - desktop only */}
               <div className={`hidden md:block w-[calc(50%-2.5rem)] ${isLeft ? "pl-20 text-left" : "pr-20 text-right"}`}>
-                <p className="text-sm text-muted-foreground font-medium pt-1">
+                <p className="text-base text-muted-foreground font-medium pt-1">
                   {item.dates}
                 </p>
               </div>
