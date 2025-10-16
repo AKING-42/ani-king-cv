@@ -112,7 +112,7 @@ All colors MUST be HSL.
       linear-gradient(to right, hsl(var(--grid-line)) 1px, transparent 1px),
       linear-gradient(to bottom, hsl(var(--grid-line)) 1px, transparent 1px);
     background-size: 24px 24px;
-    animation: background-scroll 60s linear infinite;
+    animation: background-scroll 20s linear infinite;
   }
 
   @keyframes background-scroll {
@@ -120,7 +120,7 @@ All colors MUST be HSL.
       background-position: 0 0;
     }
     100% {
-      background-position: 24px 24px;
+      background-position: 0 24px;
     }
   }
 
