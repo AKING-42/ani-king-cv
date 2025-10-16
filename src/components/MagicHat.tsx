@@ -22,13 +22,13 @@ const cvExperiences = [
   "Commissioned to create posters for a local café",
   "Doing freelance singing, mainly for film scores",
   "Volunteering at Hampstead Heath to help the public engage with nature and raise money for Heath Hands",
-  "Consistently winning at Bananagrams (wait, that wasn't meant to be in here)"
+  "Consistently winning at Bananagrams (wait, that wasn't meant to be in here)",
 ];
 
 export const MagicHat = () => {
   const [randomExperience, setRandomExperience] = useState<string>("");
   const [isShrinking, setIsShrinking] = useState(false);
-  
+
   const bananagramsExperience = "Consistently winning at Bananagrams (wait, that wasn't meant to be in here)";
 
   const pullRandomExperience = () => {
@@ -61,7 +61,7 @@ export const MagicHat = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Random experience display */}
           {randomExperience && (
-            <div className={`w-full ${isShrinking ? 'animate-scale-out' : 'animate-fade-in'}`}>
+            <div className={`w-full ${isShrinking ? "animate-scale-out" : "animate-fade-in"}`}>
               <p className="text-foreground/80 leading-relaxed text-base sm:text-lg text-center p-4 bg-primary/5 rounded-lg border border-primary/20">
                 {randomExperience}
               </p>
@@ -79,17 +79,17 @@ export const MagicHat = () => {
                 src={magicHat}
                 alt="Magic Hat"
                 className="h-24 w-24 sm:h-32 sm:w-32 dark:hidden transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
-                style={{ mixBlendMode: 'darken' }}
+                style={{ mixBlendMode: "darken" }}
               />
               <img
                 src={magicHat}
                 alt="Magic Hat"
                 className="h-24 w-24 sm:h-32 sm:w-32 hidden dark:block invert transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
-                style={{ mixBlendMode: 'lighten' }}
+                style={{ mixBlendMode: "lighten" }}
               />
             </button>
             <p className="text-foreground/80 text-base sm:text-lg font-medium text-center sm:text-left">
-              Click the hat to pull out a random experience from my CV
+              Click the hat to pull out a random experience from my CV (and a few that didn't make it on there)
             </p>
           </div>
         </div>
