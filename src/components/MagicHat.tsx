@@ -46,19 +46,19 @@ export const MagicHat = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             <button
               onClick={pullRandomExperience}
-              className="transition-all duration-300 hover:scale-110 hover:drop-shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-full"
+              className="focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-full"
               aria-label="Pull random experience from CV"
             >
               <img
                 src={magicHat}
                 alt="Magic Hat"
-                className="h-24 w-24 sm:h-32 sm:w-32 dark:hidden"
+                className="h-24 w-24 sm:h-32 sm:w-32 dark:hidden transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
                 style={{ mixBlendMode: 'darken' }}
               />
               <img
                 src={magicHat}
                 alt="Magic Hat"
-                className="h-24 w-24 sm:h-32 sm:w-32 hidden dark:block invert"
+                className="h-24 w-24 sm:h-32 sm:w-32 hidden dark:block invert transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
                 style={{ mixBlendMode: 'lighten' }}
               />
             </button>
