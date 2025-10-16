@@ -39,7 +39,7 @@ const Index = () => {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl">
         <div className="grid md:grid-cols-[2fr,1fr] gap-6 sm:gap-8 items-start">
           {/* About Me Card */}
-          <Card className="p-5 sm:p-6 border-2 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="p-5 sm:p-6 border-2 border-primary shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="mb-4">
               <img
                 src={aboutMeHeading}
@@ -67,7 +67,7 @@ const Index = () => {
           </Card>
 
           {/* Profile Photo Placeholder */}
-          <Card className="p-4 border-2 shadow-lg h-full flex items-center justify-center order-first md:order-last">
+          <Card className="p-4 border-2 border-primary shadow-lg h-full flex items-center justify-center order-first md:order-last">
             <div className="w-full aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
               <span className="text-muted-foreground text-base sm:text-lg text-center">
                 Profile Photo
