@@ -38,9 +38,9 @@ const Index = () => {
 
       {/* About Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl">
-        <div className="grid md:grid-cols-[2fr,1fr] gap-6 sm:gap-8 items-start">
+        <div className="grid md:grid-cols-[2fr,1fr] gap-6 sm:gap-8 items-stretch">
           {/* About Me Card */}
-          <Card className="p-5 sm:p-6 border-2 border-primary shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="p-5 sm:p-6 border-2 border-primary shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col">
             <div className="mb-4">
               <img
                 src={aboutMeHeading}
