@@ -70,11 +70,11 @@ export const MagicHat = () => {
 
           {/* Hat and instruction */}
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            <button
-              onClick={pullRandomExperience}
-              className="focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-full"
-              aria-label="Pull random experience from CV"
-            >
+          <button
+            onClick={pullRandomExperience}
+            className="focus:outline-none rounded-full"
+            aria-label="Pull random experience from CV"
+          >
               <img
                 src={magicHat}
                 alt="Magic Hat"
