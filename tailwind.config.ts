@@ -87,10 +87,24 @@ export default {
             height: "0",
           },
         },
+        "grow-from-hat": {
+          "0%": {
+            transform: "scale(0.1) translateY(-100px)",
+            opacity: "0",
+          },
+          "50%": {
+            opacity: "1",
+          },
+          "100%": {
+            transform: "scale(1) translateY(0)",
+            opacity: "1",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "grow-from-hat": "grow-from-hat 0.6s ease-out",
       },
     },
   },
