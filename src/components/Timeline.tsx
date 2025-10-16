@@ -126,7 +126,7 @@ export const Timeline = () => {
               } flex-col`}
             >
               {/* Content - mobile: full width, desktop: half width */}
-              <div className={`w-full md:w-[calc(50%-1rem)] ${isLeft ? "md:pr-4 md:text-right" : "md:pl-4 md:text-left"} pl-8 md:pl-0`}>
+              <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-2 md:text-right" : "md:pl-2 md:text-left"} pl-8 md:pl-0`}>
                 <div className="space-y-2">
                   {/* Mobile node indicator */}
                   <div
@@ -217,7 +217,7 @@ export const Timeline = () => {
               </div>
 
               {/* Date on opposite side - desktop only */}
-              <div className={`hidden md:block w-[calc(50%-1rem)] ${isLeft ? "pl-8 text-left" : "pr-8 text-right"}`}>
+              <div className={`hidden md:block w-[calc(50%-0.5rem)] ${isLeft ? "pl-4 text-left" : "pr-4 text-right"}`}>
                 <p className="text-base sm:text-lg text-muted-foreground font-medium pt-1">
                   {item.dates}
                 </p>
