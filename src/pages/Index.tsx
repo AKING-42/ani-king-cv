@@ -4,6 +4,8 @@ import { Card } from "@/components/ui/card";
 import nameLogo from "@/assets/name-logo.png";
 import aboutMeHeading from "@/assets/about-me-heading.png";
 import experienceEducationHeading from "@/assets/experience-education-heading.png";
+import keySkillsHeading from "@/assets/key-skills-heading.png";
+import interestsHeading from "@/assets/interests-heading.png";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 
@@ -82,9 +84,20 @@ const Index = () => {
 
       {/* Key Skills */}
       <section className="w-full py-6 sm:py-8 border-y border-border/50">
-        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6 handwritten-underline inline-block w-full">
-          Key Skills:
-        </h2>
+        <div className="flex justify-center mb-4 sm:mb-6">
+          <img
+            src={keySkillsHeading}
+            alt="Key Skills"
+            className="h-8 sm:h-10 md:h-12 w-auto dark:hidden"
+            style={{ mixBlendMode: 'darken' }}
+          />
+          <img
+            src={keySkillsHeading}
+            alt="Key Skills"
+            className="h-8 sm:h-10 md:h-12 w-auto hidden dark:block invert"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </div>
         <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-6 px-4 sm:px-6">
           {["SQE", "Python", "Storytelling", "Critical thinking", "Stakeholder management", "Excel"].map((skill, index, array) => (
             <div key={skill} className="flex items-center gap-2 sm:gap-3 md:gap-6">
@@ -121,9 +134,20 @@ const Index = () => {
 
       {/* Interests */}
       <section className="w-full py-6 sm:py-8 border-t border-border/50">
-        <h2 className="text-center text-xs sm:text-sm font-bold uppercase tracking-widest text-foreground/60 mb-4 sm:mb-6 handwritten-underline inline-block w-full">
-          Interests:
-        </h2>
+        <div className="flex justify-center mb-4 sm:mb-6">
+          <img
+            src={interestsHeading}
+            alt="Interests"
+            className="h-8 sm:h-10 md:h-12 w-auto dark:hidden"
+            style={{ mixBlendMode: 'darken' }}
+          />
+          <img
+            src={interestsHeading}
+            alt="Interests"
+            className="h-8 sm:h-10 md:h-12 w-auto hidden dark:block invert"
+            style={{ mixBlendMode: 'lighten' }}
+          />
+        </div>
         <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-6 px-4 sm:px-6">
           {["Conservation volunteering", "Freelance art and singing", "French learning (started podcast)", "Tennis", "Hiking"].map((interest, index, array) => (
             <div key={interest} className="flex items-center gap-2 sm:gap-3 md:gap-6">
