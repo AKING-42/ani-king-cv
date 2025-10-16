@@ -88,13 +88,13 @@ const Index = () => {
           <img
             src={keySkillsHeading}
             alt="Key Skills"
-            className="h-8 sm:h-10 md:h-12 w-auto dark:hidden"
+            className="h-6 sm:h-7 md:h-8 w-auto dark:hidden"
             style={{ mixBlendMode: 'darken' }}
           />
           <img
             src={keySkillsHeading}
             alt="Key Skills"
-            className="h-8 sm:h-10 md:h-12 w-auto hidden dark:block invert"
+            className="h-6 sm:h-7 md:h-8 w-auto hidden dark:block invert"
             style={{ mixBlendMode: 'lighten' }}
           />
         </div>
@@ -138,13 +138,13 @@ const Index = () => {
           <img
             src={interestsHeading}
             alt="Interests"
-            className="h-8 sm:h-10 md:h-12 w-auto dark:hidden"
+            className="h-6 sm:h-7 md:h-8 w-auto dark:hidden"
             style={{ mixBlendMode: 'darken' }}
           />
           <img
             src={interestsHeading}
             alt="Interests"
-            className="h-8 sm:h-10 md:h-12 w-auto hidden dark:block invert"
+            className="h-6 sm:h-7 md:h-8 w-auto hidden dark:block invert"
             style={{ mixBlendMode: 'lighten' }}
           />
         </div>
