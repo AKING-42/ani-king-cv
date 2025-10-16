@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import nameLogo from "@/assets/name-logo.png";
 import aboutMeHeading from "@/assets/about-me-heading.png";
 import experienceEducationHeading from "@/assets/experience-education-heading.png";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 
 const Index = () => {
@@ -68,10 +69,12 @@ const Index = () => {
 
           {/* Profile Photo Placeholder */}
           <Card className="p-4 border-2 border-primary shadow-lg h-full flex items-center justify-center order-first md:order-last">
-            <div className="w-full aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
-              <span className="text-muted-foreground text-base sm:text-lg text-center">
-                Profile Photo
-              </span>
+            <div className="w-full aspect-square rounded-lg overflow-hidden">
+              <img
+                src={profilePhoto}
+                alt="Anieshka King - Profile Photo"
+                className="w-full h-full object-cover"
+              />
             </div>
           </Card>
         </div>
