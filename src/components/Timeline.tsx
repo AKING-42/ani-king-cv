@@ -31,6 +31,31 @@ const timelineData: TimelineItem[] = [
     ]
   },
   {
+    type: "education",
+    title: "Online courses/certifications",
+    organization: "",
+    location: "",
+    dates: "Jul 2025 – Oct 2025",
+    bullets: [
+      "Digital Marketing Foundations (LinkedIn Learning)",
+      "Introduction to Data for Decision Makers (BCG X, via Forage)",
+      "The ADcademy, Research and Strategy (Brixton Finishing School)",
+      "Learn SQL Course (Codecademy)"
+    ]
+  },
+  {
+    type: "education",
+    title: "BA in English Language and Literature: First Class",
+    organization: "University of Oxford",
+    location: "",
+    dates: "Oct 2021 – Oct 2024",
+    bullets: [
+      "Choral and Academic scholarship holder",
+      "Oriel College boat club – rowed in women's 2nd boat",
+      "Member of various musical ensembles and contributor to leading student magazines"
+    ]
+  },
+  {
     type: "experience",
     title: "Fiction Team Director",
     organization: "The Isis Magazine, Oxford",
@@ -63,31 +88,6 @@ const timelineData: TimelineItem[] = [
       "Liaised with clients to refresh visual and written assets to strengthen brand identity and improve digital presence",
       "Designed webpages for clients in a broad range of industries to increase brand awareness",
       "Crafted captions for scheduled Instagram, Facebook and LinkedIn posts"
-    ]
-  },
-  {
-    type: "education",
-    title: "Online courses/certifications",
-    organization: "",
-    location: "",
-    dates: "Jul 2025 – Oct 2025",
-    bullets: [
-      "Digital Marketing Foundations (LinkedIn Learning)",
-      "Introduction to Data for Decision Makers (BCG X, via Forage)",
-      "The ADcademy, Research and Strategy (Brixton Finishing School)",
-      "Learn SQL Course (Codecademy)"
-    ]
-  },
-  {
-    type: "education",
-    title: "BA in English Language and Literature: First Class",
-    organization: "University of Oxford",
-    location: "",
-    dates: "Oct 2021 – Oct 2024",
-    bullets: [
-      "Choral and Academic scholarship holder",
-      "Oriel College boat club – rowed in women's 2nd boat",
-      "Member of various musical ensembles and contributor to leading student magazines"
     ]
   }
 ];
