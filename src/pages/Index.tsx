@@ -55,7 +55,7 @@ const Index = () => {
                 style={{ mixBlendMode: 'lighten' }}
               />
             </div>
-            <p className="text-foreground/90 leading-relaxed text-sm sm:text-base">
+            <p className="text-foreground/90 leading-relaxed text-base sm:text-lg">
               With experience across top-of-funnel marketing and legal market research, 
               underpinned by an exceptional academic foundation, I am adept at thinking 
               critically, building persuasive arguments and analyzing complex information. 
