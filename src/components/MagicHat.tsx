@@ -41,7 +41,7 @@ export const MagicHat = () => {
     if (randomExperience === bananagramsExperience) {
       const shrinkTimer = setTimeout(() => {
         setIsShrinking(true);
-      }, 2000);
+      }, 1000);
 
       const clearTimer = setTimeout(() => {
         setRandomExperience("");
