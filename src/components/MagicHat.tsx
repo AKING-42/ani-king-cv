@@ -46,7 +46,7 @@ export const MagicHat = () => {
       const clearTimer = setTimeout(() => {
         setRandomExperience("");
         setIsShrinking(false);
-      }, 5500);
+      }, 1500);
 
       return () => {
         clearTimeout(shrinkTimer);
@@ -61,7 +61,7 @@ export const MagicHat = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Random experience display */}
           {randomExperience && (
-            <div className={`w-full ${isShrinking ? "animate-scale-out" : "animate-grow-from-hat"}`}>
+            <div className={`w-full ${isShrinking ? "animate-shrink-to-nothing" : "animate-grow-from-hat"}`}>
               <p className="text-foreground/80 leading-relaxed text-base sm:text-lg text-center p-4 bg-primary/5 rounded-lg border border-primary/20">
                 {randomExperience}
               </p>
