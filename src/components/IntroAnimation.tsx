@@ -14,7 +14,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       setTimeout(() => {
         onComplete();
       }, 300);
-    }, 3000);
+    }, 1500);
   };
 
   return (
