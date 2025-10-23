@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -94,10 +94,6 @@ const timelineData: TimelineItem[] = [
 
 export const Timeline = () => {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
-  const [, setTick] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   const toggleItem = (index: number) => {
     setExpandedItems((prev) => {
@@ -111,220 +107,128 @@ export const Timeline = () => {
     });
   };
 
-  useEffect(() => {
-    let rafId: number;
-    
-    const handleScroll = () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      
-      rafId = requestAnimationFrame(() => {
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect();
-          const progress = -rect.top / (rect.height - window.innerHeight);
-          setScrollProgress(Math.max(0, Math.min(1, progress)));
-        }
-        setTick(prev => prev + 1);
-      });
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-    
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
-
-  const getHelixTransform = (index: number) => {
-    if (!itemRefs.current[index]) return {};
-    
-    const rect = itemRefs.current[index]?.getBoundingClientRect();
-    if (!rect) return {};
-    
-    const viewportHeight = window.innerHeight;
-    const itemCenter = rect.top + rect.height / 2;
-    const viewportCenter = viewportHeight / 2;
-    
-    // Normalized position (-1 to 1, where 0 is center)
-    const normalizedPos = (itemCenter - viewportCenter) / viewportHeight;
-    
-    // Double helix parameters
-    const helixRadius = 150; // Radius of the spiral
-    const helixHeight = index * 180; // Vertical spacing
-    const totalItems = timelineData.length;
-    const angle = (index / totalItems) * Math.PI * 4 + scrollProgress * Math.PI * 2; // Multiple rotations + scroll rotation
-    
-    // Determine which helix strand (alternating)
-    const isLeftStrand = index % 2 === 0;
-    const strandAngle = angle + (isLeftStrand ? 0 : Math.PI); // Offset second strand by 180°
-    
-    // Calculate helix position
-    const x = Math.cos(strandAngle) * helixRadius;
-    const z = Math.sin(strandAngle) * helixRadius - 300; // Base Z offset
-    const y = -helixHeight + normalizedPos * 200; // Ascend with scroll
-    
-    // Distance-based effects (proximity to center)
-    const distanceFromCenter = Math.abs(normalizedPos);
-    const proximityFactor = 1 - Math.min(distanceFromCenter, 1);
-    
-    // Scale: closer items are larger
-    const scale = 0.5 + proximityFactor * 0.7;
-    
-    // Opacity & glow: fade distant items
-    const opacity = 0.2 + proximityFactor * 0.8;
-    const blur = distanceFromCenter * 3;
-    const glowIntensity = proximityFactor * 30;
-    
-    return {
-      transform: `translate3d(${x}px, ${y}px, ${z}px) scale(${scale})`,
-      opacity,
-      filter: `blur(${blur}px)`,
-      boxShadow: `0 0 ${glowIntensity}px ${glowIntensity / 2}px currentColor`,
-    };
-  };
-
   return (
-    <div 
-      ref={containerRef}
-      className="relative w-full min-h-[400vh] py-32 overflow-visible"
-      style={{
-        perspective: '1500px',
-        perspectiveOrigin: 'center center',
-        transformStyle: 'preserve-3d',
-      }}
-    >
-      {/* Helix scaffold container */}
-      <div 
-        className="sticky top-0 left-0 right-0 h-screen flex items-center justify-center"
-        style={{
-          transformStyle: 'preserve-3d',
-        }}
-      >
+    <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
+      {/* Central line - hidden on mobile, shown on larger screens */}
+      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
 
-        <div 
-          className="absolute inset-0 flex items-center justify-center"
-          style={{
-            transformStyle: 'preserve-3d',
-            transform: `rotateY(${scrollProgress * 60}deg)`,
-            transition: 'transform 0.1s ease-out',
-          }}
-        >
-          {timelineData.map((item, index) => {
-            const isExpanded = expandedItems.has(index);
-            const nodeColor = item.type === "education" ? "education-node" : "work-node";
-            
-            return (
-              <div
-                key={index}
-                ref={(el) => (itemRefs.current[index] = el)}
-                className="absolute"
-                style={{
-                  ...getHelixTransform(index),
-                  transformStyle: 'preserve-3d',
-                  transition: 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
-                  willChange: 'transform, opacity, filter',
-                  pointerEvents: 'auto',
-                  color: `hsl(var(--${nodeColor}))`,
-                }}
-              >
-                {/* Glowing constellation node */}
-                <div 
-                  className="relative"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  {/* Central glow orb */}
+      <div className="space-y-8 sm:space-y-12">
+        {timelineData.map((item, index) => {
+          const isLeft = index % 2 === 0;
+          const isExpanded = expandedItems.has(index);
+          const nodeColor = item.type === "education" ? "education-node" : "work-node";
+
+          return (
+            <div
+              key={index}
+              className={`relative flex items-start ${
+                isLeft ? "md:flex-row" : "md:flex-row-reverse"
+              } flex-col`}
+            >
+              {/* Content - mobile: full width, desktop: half width */}
+              <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}>
+                <div className="space-y-2">
+                  {/* Mobile node indicator */}
                   <div
-                    className="absolute -left-4 top-0 w-8 h-8 rounded-full border-2 border-current shadow-lg"
+                    className="md:hidden absolute left-0 top-1 w-4 h-4 rounded-full border-2 border-background shadow-sm"
                     style={{
                       backgroundColor: `hsl(var(--${nodeColor}))`,
-                      boxShadow: `0 0 20px 4px hsl(var(--${nodeColor}) / 0.6), inset 0 0 10px hsl(var(--${nodeColor}) / 0.8)`,
-                      transform: 'translateZ(20px)',
+                      boxShadow: `0 1px 4px hsl(var(--${nodeColor}) / 0.25)`
                     }}
                   />
                   
-                  {/* Content card */}
-                  <div 
-                    className="bg-background/95 backdrop-blur-sm border border-current/20 rounded-lg p-4 min-w-[280px] max-w-[400px] shadow-2xl"
-                    style={{
-                      transform: 'translateZ(30px)',
-                      boxShadow: `0 8px 32px -8px hsl(var(--${nodeColor}) / 0.3)`,
-                    }}
+                  <h3 
+                    className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold leading-tight tracking-tight"
+                    style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
-                    <div className="space-y-2">
-                      <h3 
-                        className="font-serif text-lg font-bold leading-tight"
-                        style={{ color: `hsl(var(--${nodeColor}))` }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-medium">
-                        {item.organization}
-                        {item.location && `, ${item.location}`}
-                      </p>
-                      <p className="text-sm text-muted-foreground/80 font-medium">
-                        {item.dates}
-                      </p>
+                    {item.title}
+                  </h3>
+                  <p className="text-base sm:text-lg text-muted-foreground font-medium">
+                    {item.organization}
+                    {item.location && `, ${item.location}`}
+                  </p>
+                  
+                  {/* Date - mobile: below title, desktop: opposite side */}
+                  <p className="md:hidden text-base sm:text-lg text-muted-foreground font-medium">
+                    {item.dates}
+                  </p>
 
-                      {isExpanded && (
-                        <ul className="mt-3 space-y-2 text-sm">
-                          {item.bullets.map((bullet, bulletIndex) => (
-                            <li 
-                              key={bulletIndex} 
-                              className="text-foreground/70 leading-relaxed flex items-start gap-2"
-                            >
-                              <span 
-                                className="inline-block mt-1.5"
-                                style={{
-                                  width: '4px',
-                                  height: '4px',
-                                  borderRadius: '50%',
-                                  backgroundColor: `hsl(var(--${nodeColor}))`,
-                                  flexShrink: 0
-                                }}
-                              />
-                              <span className="flex-1">{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                  {isExpanded && (
+                    <ul className={`mt-4 space-y-3 text-base sm:text-lg ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
+                      {item.bullets.map((bullet, bulletIndex) => (
+                        <li 
+                          key={bulletIndex} 
+                          className="text-foreground/80 leading-relaxed flex items-center gap-3"
+                          style={{
+                            flexDirection: isLeft ? 'row-reverse' : 'row'
+                          }}
+                        >
+                          <span 
+                            className="hidden md:inline-block"
+                            style={{
+                              width: '4px',
+                              height: '4px',
+                              borderRadius: '50%',
+                              backgroundColor: `hsl(var(--${nodeColor}))`,
+                              flexShrink: 0
+                            }}
+                          />
+                          <span 
+                            className="md:hidden inline-block"
+                            style={{
+                              width: '4px',
+                              height: '4px',
+                              borderRadius: '50%',
+                              backgroundColor: `hsl(var(--${nodeColor}))`,
+                              flexShrink: 0
+                            }}
+                          />
+                          <span className="flex-1">{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleItem(index);
-                        }}
-                        className="mt-3 gap-2 text-xs hover:bg-transparent font-medium relative z-50 cursor-pointer w-full"
-                        style={{ 
-                          color: `hsl(var(--${nodeColor}))`,
-                          pointerEvents: 'auto',
-                        }}
-                      >
-                        {isExpanded ? (
-                          <>
-                            <ChevronUp className="h-3 w-3" />
-                            Show Less
-                          </>
-                        ) : (
-                          <>
-                            <ChevronDown className="h-3 w-3" />
-                            Show Details
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => toggleItem(index)}
+                    className="mt-3 gap-2 text-xs sm:text-sm hover:bg-transparent font-medium min-h-[44px] md:min-h-0"
+                    style={{ color: `hsl(var(--${nodeColor}))` }}
+                  >
+                    {isExpanded ? (
+                      <>
+                        <ChevronUp className="h-4 w-4" />
+                        Show Less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-4 w-4" />
+                        Show Details
+                      </>
+                    )}
+                  </Button>
                 </div>
               </div>
-            );
-          })}
-        </div>
+
+              {/* Date on opposite side - desktop only */}
+              <div className={`hidden md:block w-[calc(50%-0.5rem)] ${isLeft ? "pl-8 text-left md:translate-x-8" : "pr-8 text-right md:-translate-x-8"} transition-transform`}>
+                <p className="text-base sm:text-lg text-muted-foreground font-medium pt-1">
+                  {item.dates}
+                </p>
+              </div>
+
+              {/* Node - clean modern style - desktop only */}
+              <div
+                className="hidden md:block absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-[3px] border-background shadow-md z-10 transition-all hover:scale-110"
+                style={{
+                  backgroundColor: `hsl(var(--${nodeColor}))`,
+                  boxShadow: `0 2px 6px hsl(var(--${nodeColor}) / 0.25)`
+                }}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
