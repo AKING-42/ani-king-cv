@@ -94,7 +94,7 @@ const timelineData: TimelineItem[] = [
 
 export const Timeline = () => {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [, setTick] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -111,20 +111,14 @@ export const Timeline = () => {
   };
 
   useEffect(() => {
+    let rafId: number;
+    
     const handleScroll = () => {
-      if (!containerRef.current) return;
+      if (rafId) cancelAnimationFrame(rafId);
       
-      const rect = containerRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const containerTop = rect.top;
-      const containerHeight = rect.height;
-      
-      // Calculate scroll progress (0 to 1)
-      const progress = Math.max(0, Math.min(1, 
-        (viewportHeight / 2 - containerTop) / (containerHeight + viewportHeight / 2)
-      ));
-      
-      setScrollProgress(progress);
+      rafId = requestAnimationFrame(() => {
+        setTick(prev => prev + 1);
+      });
     };
 
     handleScroll();
@@ -132,6 +126,7 @@ export const Timeline = () => {
     window.addEventListener('resize', handleScroll, { passive: true });
     
     return () => {
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
@@ -150,32 +145,33 @@ export const Timeline = () => {
     // Distance from viewport center (-1 to 1, where 0 is center)
     const distanceFromCenter = (itemCenter - viewportCenter) / viewportHeight;
     
-    // Create arc effect
-    const rotateX = distanceFromCenter * -25; // Tilt based on position
-    const translateZ = Math.abs(distanceFromCenter) * -200; // Push away from center
-    const scale = 1 - Math.abs(distanceFromCenter) * 0.3; // Scale down items far from center
-    const opacity = 1 - Math.abs(distanceFromCenter) * 0.4; // Fade items far from center
+    // Create dramatic arc effect with stronger curves
+    const rotateX = distanceFromCenter * -45; // More aggressive tilt
+    const translateZ = Math.abs(distanceFromCenter) * -400; // Push further away
+    const translateY = distanceFromCenter * -50; // Add vertical curve
+    const scale = 1 - Math.abs(distanceFromCenter) * 0.4; // More dramatic scaling
+    const opacity = 1 - Math.abs(distanceFromCenter) * 0.5; // Stronger fade
     
     return {
-      transform: `perspective(1000px) rotateX(${rotateX}deg) translateZ(${translateZ}px) scale(${Math.max(0.7, scale)})`,
-      opacity: Math.max(0.3, opacity),
+      transform: `rotateX(${rotateX}deg) translateZ(${translateZ}px) translateY(${translateY}px) scale(${Math.max(0.6, scale)})`,
+      opacity: Math.max(0.2, opacity),
     };
   };
 
   return (
     <div 
       ref={containerRef}
-      className="relative max-w-4xl mx-auto py-4 sm:py-12"
+      className="relative max-w-4xl mx-auto py-4 sm:py-12 overflow-visible"
       style={{
-        perspective: '1500px',
-        perspectiveOrigin: 'center center',
+        perspective: '2000px',
+        perspectiveOrigin: 'center 50%',
+        transformStyle: 'preserve-3d',
       }}
     >
       {/* Central arc line - hidden on mobile */}
       <div 
-        className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-border/50 via-border to-border/50 -translate-x-1/2"
+        className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-border/30 via-border to-border/30 -translate-x-1/2"
         style={{
-          transform: 'perspective(1000px) rotateX(-2deg)',
           transformStyle: 'preserve-3d',
         }}
       />
@@ -192,10 +188,12 @@ export const Timeline = () => {
               ref={(el) => (itemRefs.current[index] = el)}
               className={`relative flex items-start ${
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
-              } flex-col transition-all duration-300 ease-out`}
+              } flex-col`}
               style={{
                 ...getItemTransform(index),
                 transformStyle: 'preserve-3d',
+                transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
+                willChange: 'transform, opacity',
               }}
             >
               {/* Content - mobile: full width, desktop: half width */}
