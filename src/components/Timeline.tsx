@@ -129,14 +129,17 @@ export const Timeline = () => {
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
               } flex-col`}
             >
-              {/* Card content - styled as paper */}
+              {/* Card content - styled as paper with fold animation */}
               <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0`}>
                 <div 
-                  className="bg-card border border-border rounded-sm shadow-lg p-4 sm:p-6 relative overflow-hidden transition-all duration-300"
+                  className="bg-card border border-border rounded-sm shadow-lg p-4 sm:p-6 relative overflow-visible origin-top transition-all duration-700 ease-out"
                   style={{
                     backgroundColor: 'hsl(var(--card))',
                     backgroundImage: 'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 1px), hsl(var(--border) / 0.3) calc(100% - 1px))',
                     backgroundSize: '100% 1.5rem',
+                    transformStyle: 'preserve-3d',
+                    transform: isExpanded ? 'perspective(1200px) rotateX(0deg)' : 'perspective(1200px) rotateX(-85deg)',
+                    opacity: isExpanded ? 1 : 0.3,
                   }}
                 >
                   {/* Paperclip on mobile */}
@@ -160,16 +163,8 @@ export const Timeline = () => {
                     {item.dates}
                   </p>
 
-                  {/* Folding card reveal for details */}
-                  <div 
-                    className="origin-top transition-all duration-700 ease-out overflow-hidden"
-                    style={{
-                      transform: isExpanded ? 'perspective(1000px) rotateX(0deg)' : 'perspective(1000px) rotateX(-90deg)',
-                      transformStyle: 'preserve-3d',
-                      height: isExpanded ? 'auto' : '0',
-                      opacity: isExpanded ? 1 : 0,
-                    }}
-                  >
+                  {/* Details section */}
+                  {isExpanded && (
                     <ul className={`mt-4 pt-4 border-t border-border/30 space-y-3 text-base sm:text-lg ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
                       {item.bullets.map((bullet, bulletIndex) => (
                         <li 
@@ -193,7 +188,7 @@ export const Timeline = () => {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
 
                   <Button
                     variant="ghost"
