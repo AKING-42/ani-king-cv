@@ -114,9 +114,11 @@ export const Timeline = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = itemRefs.current.indexOf(entry.target as HTMLDivElement);
-            if (index !== -1) {
-              setVisibleItems((prev) => new Set(prev).add(index));
+            const target = entry.target as HTMLElement;
+            const idxAttr = target.dataset.index;
+            const idx = typeof idxAttr === 'string' ? parseInt(idxAttr, 10) : -1;
+            if (!Number.isNaN(idx) && idx >= 0) {
+              setVisibleItems((prev) => new Set(prev).add(idx));
               observer.unobserve(entry.target);
             }
           }
@@ -140,6 +142,20 @@ export const Timeline = () => {
     };
   }, []);
 
+  // Fallback: if nothing revealed after initial observation, gently reveal with stagger
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (visibleItems.size === 0) {
+        timelineData.forEach((_, i) => {
+          setTimeout(() => {
+            setVisibleItems((prev) => new Set(prev).add(i));
+          }, i * 100);
+        });
+      }
+    }, 400);
+    return () => clearTimeout(t);
+  }, [visibleItems.size]);
+
   return (
     <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
       {/* Central line - hidden on mobile, shown on larger screens */}
@@ -156,13 +172,15 @@ export const Timeline = () => {
             <div
               key={index}
               ref={(el) => (itemRefs.current[index] = el)}
+              data-index={index}
               className={`relative flex items-start ${
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
               } flex-col`}
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: `opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 100}ms, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 100}ms`
+                transition: `opacity 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 100}ms, transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 100}ms`,
+                willChange: 'opacity, transform'
               }}
             >
               {/* Content - mobile: full width, desktop: half width */}
