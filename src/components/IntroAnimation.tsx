@@ -19,19 +19,21 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-white flex items-center justify-center transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 bg-white transition-opacity duration-300 ${
         videoEnded ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      <video
-        autoPlay
-        muted
-        playsInline
-        onEnded={handleVideoEnd}
-        className="max-w-full max-h-full object-contain"
-      >
-        <source src={introVideo} type="video/mp4" />
-      </video>
+      <div className="absolute top-0 left-0 right-0 h-1/3 flex items-center justify-center">
+        <video
+          autoPlay
+          muted
+          playsInline
+          onEnded={handleVideoEnd}
+          className="w-1/2 max-w-md h-auto object-contain"
+        >
+          <source src={introVideo} type="video/mp4" />
+        </video>
+      </div>
     </div>
   );
 };
