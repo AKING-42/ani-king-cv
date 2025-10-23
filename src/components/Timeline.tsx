@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TimelineItem {
@@ -109,8 +109,12 @@ export const Timeline = () => {
 
   return (
     <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
-      {/* Central line - hidden on mobile, shown on larger screens */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
+      {/* String line - hidden on mobile, shown on larger screens */}
+      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-amber-800/60 via-amber-700/50 to-amber-800/60 shadow-sm" 
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 69, 19, 0.1) 2px, rgba(139, 69, 19, 0.1) 4px)',
+        }}
+      />
 
       <div className="space-y-8 sm:space-y-12">
         {timelineData.map((item, index) => {
@@ -125,16 +129,19 @@ export const Timeline = () => {
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
               } flex-col`}
             >
-              {/* Content - mobile: full width, desktop: half width */}
-              <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}>
-                <div className="space-y-2">
-                  {/* Mobile node indicator */}
-                  <div
-                    className="md:hidden absolute left-0 top-1 w-4 h-4 rounded-full border-2 border-background shadow-sm"
-                    style={{
-                      backgroundColor: `hsl(var(--${nodeColor}))`,
-                      boxShadow: `0 1px 4px hsl(var(--${nodeColor}) / 0.25)`
-                    }}
+              {/* Card content - styled as paper */}
+              <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0`}>
+                <div 
+                  className="bg-card border border-border rounded-sm shadow-lg p-4 sm:p-6 relative overflow-hidden transition-all duration-300"
+                  style={{
+                    backgroundColor: 'hsl(var(--card))',
+                    backgroundImage: 'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 1px), hsl(var(--border) / 0.3) calc(100% - 1px))',
+                    backgroundSize: '100% 1.5rem',
+                  }}
+                >
+                  {/* Paperclip on mobile */}
+                  <Paperclip 
+                    className="md:hidden absolute left-2 top-2 w-5 h-5 text-muted-foreground/40 rotate-45" 
                   />
                   
                   <h3 
@@ -153,8 +160,16 @@ export const Timeline = () => {
                     {item.dates}
                   </p>
 
-                  {isExpanded && (
-                    <ul className={`mt-4 space-y-3 text-base sm:text-lg ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
+                  {/* Folding card reveal for details */}
+                  <div 
+                    className="origin-top transition-all duration-500 ease-out overflow-hidden"
+                    style={{
+                      transform: isExpanded ? 'scaleY(1)' : 'scaleY(0)',
+                      height: isExpanded ? 'auto' : '0',
+                      opacity: isExpanded ? 1 : 0,
+                    }}
+                  >
+                    <ul className={`mt-4 pt-4 border-t border-border/30 space-y-3 text-base sm:text-lg ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
                       {item.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex} 
@@ -164,17 +179,7 @@ export const Timeline = () => {
                           }}
                         >
                           <span 
-                            className="hidden md:inline-block"
-                            style={{
-                              width: '4px',
-                              height: '4px',
-                              borderRadius: '50%',
-                              backgroundColor: `hsl(var(--${nodeColor}))`,
-                              flexShrink: 0
-                            }}
-                          />
-                          <span 
-                            className="md:hidden inline-block"
+                            className="inline-block"
                             style={{
                               width: '4px',
                               height: '4px',
@@ -187,7 +192,7 @@ export const Timeline = () => {
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </div>
 
                   <Button
                     variant="ghost"
@@ -199,12 +204,12 @@ export const Timeline = () => {
                     {isExpanded ? (
                       <>
                         <ChevronUp className="h-4 w-4" />
-                        Show Less
+                        Fold
                       </>
                     ) : (
                       <>
                         <ChevronDown className="h-4 w-4" />
-                        Show Details
+                        Unfold
                       </>
                     )}
                   </Button>
@@ -218,14 +223,16 @@ export const Timeline = () => {
                 </p>
               </div>
 
-              {/* Node - clean modern style - desktop only */}
-              <div
-                className="hidden md:block absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-[3px] border-background shadow-md z-10 transition-all hover:scale-110"
-                style={{
-                  backgroundColor: `hsl(var(--${nodeColor}))`,
-                  boxShadow: `0 2px 6px hsl(var(--${nodeColor}) / 0.25)`
-                }}
-              />
+              {/* Paperclip at node - desktop only */}
+              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 z-10">
+                <Paperclip 
+                  className="w-8 h-8 rotate-45 transition-all hover:scale-110"
+                  style={{ 
+                    color: `hsl(var(--${nodeColor}))`,
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+                  }}
+                />
+              </div>
             </div>
           );
         })}
