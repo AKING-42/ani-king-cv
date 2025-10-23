@@ -161,7 +161,7 @@ export const Timeline = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative max-w-4xl mx-auto py-4 sm:py-12 overflow-visible"
+      className="relative max-w-4xl mx-auto py-16 sm:py-24 overflow-visible"
       style={{
         perspective: '1200px',
         perspectiveOrigin: 'center 40%',
@@ -176,7 +176,7 @@ export const Timeline = () => {
         }}
       />
 
-      <div className="space-y-8 sm:space-y-12">
+      <div className="space-y-16 sm:space-y-24">
         {timelineData.map((item, index) => {
           const isLeft = index % 2 === 0;
           const isExpanded = expandedItems.has(index);
@@ -194,6 +194,9 @@ export const Timeline = () => {
                 transformStyle: 'preserve-3d',
                 transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
                 willChange: 'transform, opacity',
+                pointerEvents: 'auto',
+                position: 'relative',
+                zIndex: 10,
               }}
             >
               {/* Content - mobile: full width, desktop: half width */}
