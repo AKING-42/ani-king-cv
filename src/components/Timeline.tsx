@@ -124,15 +124,20 @@ export const Timeline = () => {
       },
       {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+        rootMargin: "0px 0px -50px 0px",
       }
     );
 
-    itemRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
+    const id = requestAnimationFrame(() => {
+      itemRefs.current.forEach((ref) => {
+        if (ref) observer.observe(ref);
+      });
     });
 
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(id);
+      observer.disconnect();
+    };
   }, []);
 
   return (
