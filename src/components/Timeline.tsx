@@ -162,9 +162,10 @@ export const Timeline = () => {
 
                   {/* Folding card reveal for details */}
                   <div 
-                    className="origin-top transition-all duration-500 ease-out overflow-hidden"
+                    className="origin-top transition-all duration-700 ease-out overflow-hidden"
                     style={{
-                      transform: isExpanded ? 'scaleY(1)' : 'scaleY(0)',
+                      transform: isExpanded ? 'perspective(1000px) rotateX(0deg)' : 'perspective(1000px) rotateX(-90deg)',
+                      transformStyle: 'preserve-3d',
                       height: isExpanded ? 'auto' : '0',
                       opacity: isExpanded ? 1 : 0,
                     }}
