@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Timeline } from "@/components/Timeline";
 import { MagicHat } from "@/components/MagicHat";
 import { Card } from "@/components/ui/card";
+import IntroAnimation from "@/components/IntroAnimation";
 import nameLogo from "@/assets/name-logo.png";
 import aboutMeHeading from "@/assets/about-me-heading.png";
 import experienceEducationHeading from "@/assets/experience-education-heading.png";
@@ -10,8 +12,17 @@ import interestsHeading from "@/assets/interests-heading.png";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Index = () => {
+  const [introComplete, setIntroComplete] = useState(false);
+
+  if (!introComplete) {
+    return <IntroAnimation onComplete={() => setIntroComplete(true)} />;
+  }
+
   return (
-    <div className="min-h-screen">
+    <div 
+      className="min-h-screen animate-in slide-in-from-bottom duration-700"
+      style={{ animationFillMode: 'backwards' }}
+    >
       {/* Theme Toggle - Fixed position with larger touch target on mobile */}
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50">
         <ThemeToggle />
