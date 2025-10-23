@@ -166,6 +166,7 @@ export const Timeline = () => {
         perspective: '1200px',
         perspectiveOrigin: 'center 40%',
         transformStyle: 'preserve-3d',
+        scrollSnapType: 'y proximity',
       }}
     >
       {/* Central arc line - hidden on mobile */}
@@ -194,13 +195,18 @@ export const Timeline = () => {
                 transformStyle: 'preserve-3d',
                 transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
                 willChange: 'transform, opacity',
-                pointerEvents: 'auto',
-                position: 'relative',
-                zIndex: 10,
+                scrollSnapAlign: 'center',
+                scrollMarginTop: '50vh',
               }}
             >
               {/* Content - mobile: full width, desktop: half width */}
-              <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}>
+              <div 
+                className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}
+                style={{
+                  transform: 'translateZ(50px)',
+                  pointerEvents: 'auto',
+                }}
+              >
                 <div className="space-y-2">
                   {/* Mobile node indicator */}
                   <div
@@ -266,9 +272,16 @@ export const Timeline = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => toggleItem(index)}
-                    className="mt-3 gap-2 text-xs sm:text-sm hover:bg-transparent font-medium min-h-[44px] md:min-h-0"
-                    style={{ color: `hsl(var(--${nodeColor}))` }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleItem(index);
+                    }}
+                    className="mt-3 gap-2 text-xs sm:text-sm hover:bg-transparent font-medium min-h-[44px] md:min-h-0 relative z-50 cursor-pointer"
+                    style={{ 
+                      color: `hsl(var(--${nodeColor}))`,
+                      pointerEvents: 'auto',
+                      touchAction: 'auto',
+                    }}
                   >
                     {isExpanded ? (
                       <>
@@ -286,7 +299,12 @@ export const Timeline = () => {
               </div>
 
               {/* Date on opposite side - desktop only */}
-              <div className={`hidden md:block w-[calc(50%-0.5rem)] ${isLeft ? "pl-8 text-left md:translate-x-8" : "pr-8 text-right md:-translate-x-8"} transition-transform`}>
+              <div 
+                className={`hidden md:block w-[calc(50%-0.5rem)] ${isLeft ? "pl-8 text-left md:translate-x-8" : "pr-8 text-right md:-translate-x-8"} transition-transform`}
+                style={{
+                  transform: 'translateZ(50px)',
+                }}
+              >
                 <p className="text-base sm:text-lg text-muted-foreground font-medium pt-1">
                   {item.dates}
                 </p>
