@@ -11,7 +11,7 @@ All colors MUST be HSL.
     --background: 45 20% 96%;
     --foreground: 220 15% 20%;
 
-    --card: 0 0% 100%;
+    --card: 42 25% 97%;
     --card-foreground: 220 15% 20%;
 
     --popover: 0 0% 100%;
@@ -23,7 +23,7 @@ All colors MUST be HSL.
     --secondary: 45 15% 88%;
     --secondary-foreground: 220 15% 20%;
 
-    --muted: 45 15% 90%;
+    --muted: 40 20% 92%;
     --muted-foreground: 220 15% 35%;
 
     --accent: 210 100% 20%;
@@ -32,7 +32,7 @@ All colors MUST be HSL.
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 85%;
+    --border: 35 15% 80%;
     --input: 220 15% 85%;
     --ring: 25 85% 45%;
 
@@ -58,7 +58,7 @@ All colors MUST be HSL.
     --background: 220 20% 12%;
     --foreground: 45 20% 92%;
 
-    --card: 220 18% 15%;
+    --card: 30 15% 18%;
     --card-foreground: 45 20% 92%;
 
     --popover: 220 18% 15%;
@@ -70,7 +70,7 @@ All colors MUST be HSL.
     --secondary: 220 15% 20%;
     --secondary-foreground: 45 20% 92%;
 
-    --muted: 220 15% 18%;
+    --muted: 220 15% 22%;
     --muted-foreground: 220 10% 65%;
 
     --accent: 210 100% 28%;
@@ -79,7 +79,7 @@ All colors MUST be HSL.
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 25%;
+    --border: 30 10% 28%;
     --input: 220 15% 25%;
     --ring: 25 85% 55%;
 
@@ -148,5 +148,24 @@ All colors MUST be HSL.
 
   .handwritten-underline:hover::after {
     transform: scaleX(1);
+  }
+
+  .paper-texture {
+    position: relative;
+  }
+
+  .paper-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        hsl(var(--foreground) / 0.02) 1px,
+        hsl(var(--foreground) / 0.02) 2px
+      );
+    pointer-events: none;
   }
 }

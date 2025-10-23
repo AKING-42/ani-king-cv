@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -94,6 +94,22 @@ const timelineData: TimelineItem[] = [
 
 export const Timeline = () => {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const progress = (viewportCenter - rect.top) / rect.height;
+      setScrollProgress(Math.max(0, Math.min(1, progress)));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleItem = (index: number) => {
     setExpandedItems((prev) => {
@@ -107,128 +123,198 @@ export const Timeline = () => {
     });
   };
 
-  return (
-    <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
-      {/* Central line - hidden on mobile, shown on larger screens */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
+  const getCardTransform = (index: number) => {
+    const totalCards = timelineData.length;
+    const anglePerCard = 360 / totalCards;
+    const baseAngle = index * anglePerCard;
+    const rotation = scrollProgress * 360 * 2;
+    const currentAngle = baseAngle - rotation;
+    
+    const radius = 280;
+    const x = Math.sin((currentAngle * Math.PI) / 180) * radius;
+    const z = Math.cos((currentAngle * Math.PI) / 180) * radius;
+    
+    const cardRotation = -currentAngle;
+    const tilt = Math.sin((currentAngle * Math.PI) / 180) * 15;
+    
+    const normalizedAngle = ((currentAngle % 360) + 360) % 360;
+    const isFront = normalizedAngle > 90 && normalizedAngle < 270;
+    const distanceFromCenter = Math.abs(normalizedAngle - 180);
+    const opacity = isFront ? Math.max(0.3, 1 - distanceFromCenter / 180) : 0.1;
+    const scale = isFront ? Math.max(0.7, 1 - distanceFromCenter / 400) : 0.5;
+    
+    return {
+      transform: `translate3d(${x}px, 0, ${z}px) rotateY(${cardRotation}deg) rotateX(${tilt}deg) scale(${scale})`,
+      opacity,
+      zIndex: Math.round((1 - distanceFromCenter / 180) * 100),
+    };
+  };
 
-      <div className="space-y-8 sm:space-y-12">
+  return (
+    <div ref={containerRef} className="relative min-h-[300vh] py-20">
+      {/* Binder rings */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-12 pointer-events-none z-0">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="w-16 h-20 rounded-full border-8 border-muted-foreground/30"
+            style={{
+              transform: `rotateX(75deg) rotateY(${scrollProgress * 360 * 2}deg)`,
+              boxShadow: 'inset 0 4px 8px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
+              background: 'linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--muted-foreground) / 0.1) 100%)',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Cards container */}
+      <div
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl"
+        style={{
+          perspective: '1200px',
+          perspectiveOrigin: 'center center',
+          transformStyle: 'preserve-3d',
+        }}
+      >
         {timelineData.map((item, index) => {
-          const isLeft = index % 2 === 0;
           const isExpanded = expandedItems.has(index);
+          const cardStyle = getCardTransform(index);
           const nodeColor = item.type === "education" ? "education-node" : "work-node";
 
           return (
             <div
               key={index}
-              className={`relative flex items-start ${
-                isLeft ? "md:flex-row" : "md:flex-row-reverse"
-              } flex-col`}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] transition-all duration-300"
+              style={{
+                ...cardStyle,
+                transformStyle: 'preserve-3d',
+              }}
             >
-              {/* Content - mobile: full width, desktop: half width */}
-              <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}>
-                <div className="space-y-2">
-                  {/* Mobile node indicator */}
+              {/* Index card */}
+              <div
+                className="relative bg-card rounded-lg shadow-2xl transition-all duration-500"
+                style={{
+                  background: 'linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)',
+                  boxShadow: `
+                    0 10px 40px rgba(0,0,0,0.2),
+                    0 2px 8px rgba(0,0,0,0.1),
+                    inset 0 1px 0 rgba(255,255,255,0.5)
+                  `,
+                  border: '1px solid hsl(var(--border))',
+                  transformStyle: 'preserve-3d',
+                  transform: isExpanded ? 'rotateX(-10deg)' : 'rotateX(0deg)',
+                }}
+              >
+                {/* Binder holes */}
+                <div className="absolute top-8 left-0 flex flex-col gap-6 -translate-x-1/2">
+                  {[0, 1, 2].map((i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full bg-background border-2 border-border"
+                      style={{
+                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)',
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Card content */}
+                <div className="p-8 pl-12">
                   <div
-                    className="md:hidden absolute left-0 top-1 w-4 h-4 rounded-full border-2 border-background shadow-sm"
+                    className="inline-block px-2 py-1 mb-2 text-xs rounded"
                     style={{
-                      backgroundColor: `hsl(var(--${nodeColor}))`,
-                      boxShadow: `0 1px 4px hsl(var(--${nodeColor}) / 0.25)`
+                      backgroundColor: `hsl(var(--${nodeColor}) / 0.15)`,
+                      color: `hsl(var(--${nodeColor}))`,
+                      border: `1px solid hsl(var(--${nodeColor}) / 0.3)`,
                     }}
-                  />
-                  
-                  <h3 
-                    className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold leading-tight tracking-tight"
+                  >
+                    {item.type}
+                  </div>
+
+                  <h3
+                    className="font-handwritten text-2xl font-bold mb-2 leading-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-base sm:text-lg text-muted-foreground font-medium">
+
+                  <p className="text-base text-muted-foreground font-medium mb-1">
                     {item.organization}
                     {item.location && `, ${item.location}`}
                   </p>
-                  
-                  {/* Date - mobile: below title, desktop: opposite side */}
-                  <p className="md:hidden text-base sm:text-lg text-muted-foreground font-medium">
+
+                  <p className="text-sm text-muted-foreground font-medium mb-4">
                     {item.dates}
                   </p>
 
-                  {isExpanded && (
-                    <ul className={`mt-4 space-y-3 text-base sm:text-lg ${isLeft ? "md:text-right" : "md:text-left"} text-left`}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => toggleItem(index)}
+                    className="gap-2 text-sm font-medium"
+                    style={{ color: `hsl(var(--${nodeColor}))` }}
+                  >
+                    {isExpanded ? (
+                      <>
+                        <ChevronUp className="h-4 w-4" />
+                        Fold Up
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-4 w-4" />
+                        Unfold Details
+                      </>
+                    )}
+                  </Button>
+                </div>
+
+                {/* Expandable details - folds down */}
+                <div
+                  className="overflow-hidden transition-all duration-500 origin-top"
+                  style={{
+                    maxHeight: isExpanded ? '600px' : '0',
+                    transform: isExpanded ? 'rotateX(0deg) translateZ(20px)' : 'rotateX(-90deg) translateZ(0px)',
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  <div
+                    className="px-8 pb-8 pl-12 pt-4"
+                    style={{
+                      background: 'linear-gradient(180deg, transparent 0%, hsl(var(--muted) / 0.3) 100%)',
+                      borderTop: `1px dashed hsl(var(--${nodeColor}) / 0.3)`,
+                    }}
+                  >
+                    <ul className="space-y-3">
                       {item.bullets.map((bullet, bulletIndex) => (
-                        <li 
-                          key={bulletIndex} 
-                          className="text-foreground/80 leading-relaxed flex items-center gap-3"
-                          style={{
-                            flexDirection: isLeft ? 'row-reverse' : 'row'
-                          }}
+                        <li
+                          key={bulletIndex}
+                          className="text-sm text-foreground/80 leading-relaxed flex items-start gap-3"
                         >
-                          <span 
-                            className="hidden md:inline-block"
+                          <span
+                            className="inline-block mt-2"
                             style={{
-                              width: '4px',
-                              height: '4px',
+                              width: '6px',
+                              height: '6px',
                               borderRadius: '50%',
                               backgroundColor: `hsl(var(--${nodeColor}))`,
-                              flexShrink: 0
-                            }}
-                          />
-                          <span 
-                            className="md:hidden inline-block"
-                            style={{
-                              width: '4px',
-                              height: '4px',
-                              borderRadius: '50%',
-                              backgroundColor: `hsl(var(--${nodeColor}))`,
-                              flexShrink: 0
+                              flexShrink: 0,
                             }}
                           />
                           <span className="flex-1">{bullet}</span>
                         </li>
                       ))}
                     </ul>
-                  )}
-
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => toggleItem(index)}
-                    className="mt-3 gap-2 text-xs sm:text-sm hover:bg-transparent font-medium min-h-[44px] md:min-h-0"
-                    style={{ color: `hsl(var(--${nodeColor}))` }}
-                  >
-                    {isExpanded ? (
-                      <>
-                        <ChevronUp className="h-4 w-4" />
-                        Show Less
-                      </>
-                    ) : (
-                      <>
-                        <ChevronDown className="h-4 w-4" />
-                        Show Details
-                      </>
-                    )}
-                  </Button>
+                  </div>
                 </div>
               </div>
-
-              {/* Date on opposite side - desktop only */}
-              <div className={`hidden md:block w-[calc(50%-0.5rem)] ${isLeft ? "pl-8 text-left md:translate-x-8" : "pr-8 text-right md:-translate-x-8"} transition-transform`}>
-                <p className="text-base sm:text-lg text-muted-foreground font-medium pt-1">
-                  {item.dates}
-                </p>
-              </div>
-
-              {/* Node - clean modern style - desktop only */}
-              <div
-                className="hidden md:block absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-[3px] border-background shadow-md z-10 transition-all hover:scale-110"
-                style={{
-                  backgroundColor: `hsl(var(--${nodeColor}))`,
-                  boxShadow: `0 2px 6px hsl(var(--${nodeColor}) / 0.25)`
-                }}
-              />
             </div>
           );
         })}
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground text-sm pointer-events-none">
+        Scroll to rotate the binder
       </div>
     </div>
   );
