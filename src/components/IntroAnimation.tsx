@@ -14,12 +14,12 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       setTimeout(() => {
         onComplete();
       }, 300);
-    }, 5000);
+    }, 3000);
   };
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-background flex items-center justify-center transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 bg-white flex items-center justify-center transition-opacity duration-300 ${
         videoEnded ? 'opacity-0' : 'opacity-100'
       }`}
     >
