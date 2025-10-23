@@ -9,10 +9,12 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
   const [videoEnded, setVideoEnded] = useState(false);
 
   const handleVideoEnd = () => {
-    setVideoEnded(true);
     setTimeout(() => {
-      onComplete();
-    }, 300);
+      setVideoEnded(true);
+      setTimeout(() => {
+        onComplete();
+      }, 300);
+    }, 5000);
   };
 
   return (
