@@ -145,16 +145,16 @@ export const Timeline = () => {
     // Distance from viewport center (-1 to 1, where 0 is center)
     const distanceFromCenter = (itemCenter - viewportCenter) / viewportHeight;
     
-    // Create dramatic arc effect with stronger curves
-    const rotateX = distanceFromCenter * -45; // More aggressive tilt
-    const translateZ = Math.abs(distanceFromCenter) * -400; // Push further away
-    const translateY = distanceFromCenter * -50; // Add vertical curve
-    const scale = 1 - Math.abs(distanceFromCenter) * 0.4; // More dramatic scaling
-    const opacity = 1 - Math.abs(distanceFromCenter) * 0.5; // Stronger fade
+    // Create EXTREME arc effect - items curve dramatically in 3D space
+    const rotateX = distanceFromCenter * -80; // Massive tilt for dramatic curve
+    const translateZ = Math.abs(distanceFromCenter) * -800; // Push very far into distance
+    const translateY = distanceFromCenter * -120; // Strong vertical curve
+    const scale = 1 - Math.abs(distanceFromCenter) * 0.6; // Dramatic size change
+    const opacity = 1 - Math.abs(distanceFromCenter) * 0.7; // Strong fade effect
     
     return {
-      transform: `rotateX(${rotateX}deg) translateZ(${translateZ}px) translateY(${translateY}px) scale(${Math.max(0.6, scale)})`,
-      opacity: Math.max(0.2, opacity),
+      transform: `rotateX(${rotateX}deg) translateZ(${translateZ}px) translateY(${translateY}px) scale(${Math.max(0.4, scale)})`,
+      opacity: Math.max(0.15, opacity),
     };
   };
 
@@ -163,8 +163,8 @@ export const Timeline = () => {
       ref={containerRef}
       className="relative max-w-4xl mx-auto py-4 sm:py-12 overflow-visible"
       style={{
-        perspective: '2000px',
-        perspectiveOrigin: 'center 50%',
+        perspective: '1200px',
+        perspectiveOrigin: 'center 40%',
         transformStyle: 'preserve-3d',
       }}
     >
