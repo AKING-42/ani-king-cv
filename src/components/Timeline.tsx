@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -94,6 +94,9 @@ const timelineData: TimelineItem[] = [
 
 export const Timeline = () => {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const toggleItem = (index: number) => {
     setExpandedItems((prev) => {
@@ -107,10 +110,75 @@ export const Timeline = () => {
     });
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const containerTop = rect.top;
+      const containerHeight = rect.height;
+      
+      // Calculate scroll progress (0 to 1)
+      const progress = Math.max(0, Math.min(1, 
+        (viewportHeight / 2 - containerTop) / (containerHeight + viewportHeight / 2)
+      ));
+      
+      setScrollProgress(progress);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  const getItemTransform = (index: number) => {
+    if (!itemRefs.current[index]) return {};
+    
+    const rect = itemRefs.current[index]?.getBoundingClientRect();
+    if (!rect) return {};
+    
+    const viewportHeight = window.innerHeight;
+    const itemCenter = rect.top + rect.height / 2;
+    const viewportCenter = viewportHeight / 2;
+    
+    // Distance from viewport center (-1 to 1, where 0 is center)
+    const distanceFromCenter = (itemCenter - viewportCenter) / viewportHeight;
+    
+    // Create arc effect
+    const rotateX = distanceFromCenter * -25; // Tilt based on position
+    const translateZ = Math.abs(distanceFromCenter) * -200; // Push away from center
+    const scale = 1 - Math.abs(distanceFromCenter) * 0.3; // Scale down items far from center
+    const opacity = 1 - Math.abs(distanceFromCenter) * 0.4; // Fade items far from center
+    
+    return {
+      transform: `perspective(1000px) rotateX(${rotateX}deg) translateZ(${translateZ}px) scale(${Math.max(0.7, scale)})`,
+      opacity: Math.max(0.3, opacity),
+    };
+  };
+
   return (
-    <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
-      {/* Central line - hidden on mobile, shown on larger screens */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-border -translate-x-1/2" />
+    <div 
+      ref={containerRef}
+      className="relative max-w-4xl mx-auto py-4 sm:py-12"
+      style={{
+        perspective: '1500px',
+        perspectiveOrigin: 'center center',
+      }}
+    >
+      {/* Central arc line - hidden on mobile */}
+      <div 
+        className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-border/50 via-border to-border/50 -translate-x-1/2"
+        style={{
+          transform: 'perspective(1000px) rotateX(-2deg)',
+          transformStyle: 'preserve-3d',
+        }}
+      />
 
       <div className="space-y-8 sm:space-y-12">
         {timelineData.map((item, index) => {
@@ -121,9 +189,14 @@ export const Timeline = () => {
           return (
             <div
               key={index}
+              ref={(el) => (itemRefs.current[index] = el)}
               className={`relative flex items-start ${
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
-              } flex-col`}
+              } flex-col transition-all duration-300 ease-out`}
+              style={{
+                ...getItemTransform(index),
+                transformStyle: 'preserve-3d',
+              }}
             >
               {/* Content - mobile: full width, desktop: half width */}
               <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}>
