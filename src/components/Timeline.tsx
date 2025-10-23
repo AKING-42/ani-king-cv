@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -94,6 +94,8 @@ const timelineData: TimelineItem[] = [
 
 export const Timeline = () => {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const toggleItem = (index: number) => {
     setExpandedItems((prev) => {
@@ -107,6 +109,32 @@ export const Timeline = () => {
     });
   };
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = itemRefs.current.indexOf(entry.target as HTMLDivElement);
+            if (index !== -1) {
+              setVisibleItems((prev) => new Set(prev).add(index));
+              observer.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      }
+    );
+
+    itemRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="relative max-w-4xl mx-auto py-4 sm:py-12">
       {/* Central line - hidden on mobile, shown on larger screens */}
@@ -117,13 +145,20 @@ export const Timeline = () => {
           const isLeft = index % 2 === 0;
           const isExpanded = expandedItems.has(index);
           const nodeColor = item.type === "education" ? "education-node" : "work-node";
+          const isVisible = visibleItems.has(index);
 
           return (
             <div
               key={index}
+              ref={(el) => (itemRefs.current[index] = el)}
               className={`relative flex items-start ${
                 isLeft ? "md:flex-row" : "md:flex-row-reverse"
               } flex-col`}
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                transition: `opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 100}ms, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 100}ms`
+              }}
             >
               {/* Content - mobile: full width, desktop: half width */}
               <div className={`w-full md:w-[calc(50%-0.5rem)] ${isLeft ? "md:pr-8 md:text-right md:-translate-x-8" : "md:pl-8 md:text-left md:translate-x-8"} pl-8 md:pl-0 transition-transform`}>
