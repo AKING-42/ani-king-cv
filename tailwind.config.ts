@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Playfair Display', 'serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['Tiro Bangla', 'serif'],
+        serif: ['Tiro Bangla', 'serif'],
         handwritten: ['Caveat', 'cursive'],
       },
       colors: {
