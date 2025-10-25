@@ -196,7 +196,7 @@ export const Timeline = () => {
                   />
                   
                   <h3 
-                    className="font-zeyada text-xl sm:text-2xl md:text-3xl font-semibold leading-tight tracking-tight"
+                    className="font-zeyada text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight tracking-tight"
                     style={{ color: `hsl(var(--${nodeColor}))` }}
                   >
                     {item.title}
