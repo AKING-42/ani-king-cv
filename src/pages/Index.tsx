@@ -105,7 +105,7 @@ const Index = () => {
           {["SQL", "Python", "Storytelling", "Critical thinking", "Stakeholder management", "Excel"].map(
             (skill, index, array) => (
               <div key={skill} className="flex items-center gap-2 sm:gap-3 md:gap-6">
-                <span className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap transition-transform duration-200 hover:scale-110 cursor-default">
+                <span className="text-xs sm:text-sm md:text-base font-zen font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap transition-transform duration-200 hover:scale-110 cursor-default">
                   {skill}
                 </span>
                 {index < array.length - 1 && <span className="text-primary/40 hidden sm:inline">•</span>}
@@ -162,7 +162,7 @@ const Index = () => {
             "Hiking",
           ].map((interest, index, array) => (
             <div key={interest} className="flex items-center gap-2 sm:gap-3 md:gap-6">
-              <span className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap transition-transform duration-200 hover:scale-110 cursor-default">
+              <span className="text-xs sm:text-sm md:text-base font-zen font-medium uppercase tracking-wider text-foreground/80 whitespace-nowrap transition-transform duration-200 hover:scale-110 cursor-default">
                 {interest}
               </span>
               {index < array.length - 1 && <span className="text-primary/40 hidden sm:inline">•</span>}

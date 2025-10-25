@@ -18,6 +18,7 @@ export default {
         serif: ['Tiro Bangla', 'serif'],
         handwritten: ['Caveat', 'cursive'],
         zeyada: ['Zeyada', 'cursive'],
+        zen: ['Zen Old Mincho', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
